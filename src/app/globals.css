@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* Brand tokens — swap here to re-skin the whole site. */
+@theme {
+  --color-ink: #0b0b0c;
+  --color-panel: #141416;
+  --color-line: #26262a;
+  --color-muted: #9a9aa2;
+  --color-paper: #ffffff;
+  --color-accent: #d6d6d8;
+  --color-accent-strong: #e9e9eb;
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  /* The live site's headline face as visitors actually see it (its Adonis webfont 404s and falls back to Times). */
+  --font-classic: "Times New Roman", Times, serif;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    /* Always keep the scrollbar's space. Otherwise it appears part-way through loading (once the page grows taller
+       than the window) and nudges everything centred — the header logo and the loader's — sideways. */
+    overflow-y: scroll;
+  }
+  body {
+    @apply bg-ink text-paper font-sans antialiased;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+}
+/* Featured-card border: a graphite edge with a band of light that travels slowly around it. */
+@property --feature-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes feature-sweep {
+  to {
+    --feature-angle: 360deg;
+  }
+}
+@utility feature-frame {
+  padding: 4.5px;
+  background: conic-gradient(
+    from var(--feature-angle),
+    #1c1c1f 0deg,
+    #1c1c1f 190deg,
+    #77777c 245deg,
+    #ffffff 285deg,
+    #77777c 325deg,
+    #1c1c1f 360deg
+  );
+  box-shadow:
+    0 0 0 1px rgb(11 11 12 / 0.06),
+    0 30px 70px -32px rgb(11 11 12 / 0.6);
+  animation: feature-sweep 8s linear infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Full-bleed gutter for the header and hero: pinned to the window edges rather than the centred column. */
+@utility edge-x {
+  @apply w-full px-5 sm:px-8 lg:px-[5vw];
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-colors disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-paper text-ink hover:bg-accent-strong;
+}
+@utility btn-ghost {
+  @apply btn border border-line text-paper hover:border-accent hover:text-accent;
+}
+@utility eyebrow {
+  @apply text-xs font-medium uppercase tracking-[0.2em] text-accent;
+}
+@utility heading {
+  @apply font-display text-3xl leading-tight tracking-tight sm:text-4xl;
+}
+@utility input {
+  @apply w-full rounded-lg border border-line bg-ink px-4 py-3 text-sm text-paper placeholder:text-muted/70 focus:border-accent focus:outline-none;
+}
+@utility label {
+  @apply mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted;
+}
