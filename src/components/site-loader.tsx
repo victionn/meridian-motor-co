@@ -14,7 +14,7 @@ const SWEEP_START = 31.1;
 const SWEEP = 254.7;
 
 /** What the loader waits for, and how much of the ring each is worth. */
-const WEIGHTS = { page: 15, fonts: 20, poster: 30, video: 35 };
+const WEIGHTS = { fonts: 25, poster: 40, video: 35 };
 type Step = keyof typeof WEIGHTS;
 
 // The loader adds well under a second of its own when everything is already loaded: a third of a second to draw the ring,
@@ -23,7 +23,7 @@ const MAX_SPEED = 300; // percent per second, so an instant load draws the ring 
 const HOLD_MS = 80; // pause on the finished logo before the black lifts
 const FADE_MS = 300; // matches the duration-300 on the overlay below
 const VIDEO_GRACE_MS = 400; // longest the ring waits on the first clip alone
-const GIVE_UP_MS = 7000; // never hold the visitor longer than this, whatever is still loading
+const GIVE_UP_MS = 4000; // never hold the visitor longer than this, whatever is still loading
 
 /**
  * Opening loader for the home page: a black screen with the Meridian roundel sitting exactly where the header's
@@ -38,7 +38,7 @@ export function SiteLoader() {
 
   useEffect(() => {
     if (played) return;
-    const done: Record<Step, boolean> = { page: false, fonts: false, poster: false, video: false };
+    const done: Record<Step, boolean> = { fonts: false, poster: false, video: false };
     const mark = (step: Step) => () => {
       done[step] = true;
     };
@@ -58,8 +58,8 @@ export function SiteLoader() {
       window.removeEventListener("keydown", blockKeys);
     };
 
-    if (document.readyState === "complete") done.page = true;
-    else window.addEventListener("load", mark("page"), { once: true });
+    // The window's own "load" event is deliberately not waited for: Safari holds it back until the banner video
+    // has downloaded, which left the ring sitting half-drawn for seconds.
 
     document.fonts.ready.then(mark("fonts"));
 
@@ -92,7 +92,7 @@ export function SiteLoader() {
     let shown = 0;
     let last = performance.now();
     let frame = requestAnimationFrame(function tick(now) {
-      if (!graceStarted && done.page && done.fonts && done.poster && !done.video) {
+      if (!graceStarted && done.fonts && done.poster && !done.video) {
         graceStarted = true;
         timers.push(setTimeout(mark("video"), VIDEO_GRACE_MS));
       }
