@@ -84,28 +84,28 @@ async function VehicleDetail({ params }: Pick<PageProps<"/cars/[slug]">, "params
       </nav>
 
       {/* Photos and write-up run down the left; the summary rides alongside, staying in view until "You might also like". */}
-      <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_23rem] lg:items-start xl:grid-cols-[minmax(0,1fr)_27rem] xl:gap-12">
+      <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_25rem] lg:items-start xl:grid-cols-[minmax(0,1fr)_31rem] xl:gap-12 2xl:grid-cols-[minmax(0,1fr)_36rem] 2xl:gap-16">
         <div className="min-w-0">
           <VehicleGallery images={v.images} alt={title} />
         </div>
 
-        <aside className="lg:sticky lg:top-20 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-h-[calc(100svh-5.5rem)] lg:overflow-y-auto lg:pt-2">
-          <h1 className="text-[2rem] font-bold leading-tight tracking-tight xl:text-[2.4rem]">
+        <aside className="lg:sticky lg:top-28 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-h-[calc(100svh-7.5rem)] lg:overflow-y-auto lg:overflow-x-hidden lg:pt-2">
+          <h1 className="text-[2.2rem] font-bold leading-[1.1] tracking-tight xl:text-5xl 2xl:text-[3.4rem]">
             {v.make} <span className="text-ink/50">{v.model}</span>{" "}
-            <span className="text-lg font-semibold tracking-normal text-ink/35">{v.year}</span>
+            <span className="text-xl font-semibold tracking-normal text-ink/35 xl:text-2xl">{v.year}</span>
           </h1>
-          {(v.variant || v.engine) && <p className="mt-2.5 text-lg leading-snug text-ink/75">{[v.variant, v.body, v.engine].filter(Boolean).join(" · ")}</p>}
+          {(v.variant || v.engine) && <p className="mt-3 text-lg leading-snug text-ink/75 xl:text-xl 2xl:text-[1.4rem]">{[v.variant, v.body, v.engine].filter(Boolean).join(" · ")}</p>}
 
-          <p className="mt-4 border-b border-ink/15 pb-4 text-[1.75rem] font-bold tracking-tight">
+          <p className="mt-5 border-b border-ink/15 pb-5 text-[2rem] font-bold tracking-tight xl:text-[2.5rem] 2xl:text-5xl">
             {sold ? "Sold" : formatPrice(v.price)}
             {v.status === "reserved" && (
               <span className="ml-3 rounded-full bg-ink px-3 py-1 align-middle text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-paper">Reserved</span>
             )}
           </p>
 
-          <VehicleSpecs vehicle={v} className="mt-5" />
+          <VehicleSpecs vehicle={v} className="mt-6 xl:gap-y-8 xl:[&_svg]:h-9 xl:[&_svg]:w-9 xl:[&>div>div]:text-[1.05rem] 2xl:[&>div>div]:text-[1.15rem]" />
 
-          <div className="mt-6 overflow-hidden rounded-2xl text-[0.8rem] font-medium uppercase tracking-[0.16em]">
+          <div className="mt-7 overflow-hidden rounded-2xl text-[0.85rem] font-medium uppercase tracking-[0.16em] xl:text-base xl:[&_a]:py-5 xl:[&_button]:py-5">
             {sold ? (
               <Link href="/cars" className="flex items-center justify-center bg-ink py-4 text-paper transition-colors hover:bg-ink/85">
                 Browse the showroom
@@ -125,14 +125,14 @@ async function VehicleDetail({ params }: Pick<PageProps<"/cars/[slug]">, "params
             )}
           </div>
 
-          <p className="mt-4 flex justify-between text-sm text-ink/60">
+          <p className="mt-5 flex justify-between text-sm text-ink/60 xl:text-base">
             <span>Stock no. {v.stockNumber}</span>
             <a href={site.showroom.mapsUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-ink">
               Get directions
             </a>
           </p>
 
-          <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-ink/15 pt-4 text-[0.9rem] font-medium leading-tight">
+          <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-ink/15 pt-5 text-[0.9rem] font-medium leading-tight xl:text-[1.05rem] 2xl:text-lg">
             {site.assurances.map((a) => (
               <li key={a.id} className="flex items-center gap-2.5">
                 <svg aria-hidden viewBox="0 0 24 24" className="h-6 w-6 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
@@ -143,7 +143,7 @@ async function VehicleDetail({ params }: Pick<PageProps<"/cars/[slug]">, "params
             ))}
           </ul>
 
-          <ReviewRatings className="mt-4 space-y-2 border-t border-ink/15 pt-4" />
+          <ReviewRatings className="mt-5 space-y-3 border-t border-ink/15 pt-5" />
         </aside>
 
         {/* Open editorial sections straight on the page (no boxes), set large so the copy carries. */}
