@@ -35,7 +35,7 @@ export default function VehiclePage({ params }: PageProps<"/cars/[slug]">) {
   return (
     // Light scheme, matching the showroom (the site default is dark).
     <div className="bg-paper text-ink [color-scheme:light]">
-      <div className="mx-auto max-w-[2400px] px-4 pb-20 pt-6 sm:px-6 sm:pt-8 xl:px-10">
+      <div className="mx-auto max-w-[2400px] px-5 pb-20 pt-6 sm:px-8 sm:pt-8 lg:px-[5vw]">
         <Suspense fallback={<div className="aspect-3/2 max-w-5xl animate-pulse rounded-2xl bg-ink/6" />}>
           <VehicleDetail params={params} />
         </Suspense>
