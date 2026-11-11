@@ -102,13 +102,6 @@ export const site = {
       imageAlt: "A dark blue BMW with a red bow on the bonnet in the showroom, beside a congratulations sign",
     },
     {
-      name: "Nikolas A.",
-      source: "Google",
-      rating: 5,
-      quote:
-        "Absolutely seamless experience. Purchased a car for my elderly father. The whole experience from start to finish was really good. They handled the trade-in, swapping of plates & made my dad feel really comfortable. Thank you Meridian. We'll definitely be back again.",
-    },
-    {
       name: "Vanessa S.",
       source: "Google",
       rating: 5,
@@ -116,6 +109,13 @@ export const site = {
         "My partner Liam and I purchased a Land Rover Discovery Sport and had the pleasure of dealing with Mistral. Mistral was the ultimate professional and her regular communication and updates regarding the purchase of our car was truly appreciated. I would not hesitate to deal with Mistral and Meridian Motor Co again. We thoroughly enjoyed our experience. Keep up the good work Mistral and Meridian Motor Co. Thanks - Vanessa and Liam",
       image: "/testimonials/vanessa-s.jpg",
       imageAlt: "Two customers standing beside a red Land Rover Discovery Sport with a red bow on the bonnet",
+    },
+    {
+      name: "Nikolas A.",
+      source: "Google",
+      rating: 5,
+      quote:
+        "Absolutely seamless experience. Purchased a car for my elderly father. The whole experience from start to finish was really good. They handled the trade-in, swapping of plates & made my dad feel really comfortable. Thank you Meridian. We'll definitely be back again.",
     },
     {
       name: "Jason H.",

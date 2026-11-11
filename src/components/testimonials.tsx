@@ -8,7 +8,8 @@ import { SourceLogo, Stars } from "./review-ratings";
  * (same gutters as the header): two and a half cards show on a laptop, three and a half on a wide monitor.
  * Quotes come from site.testimonials; renders nothing if there are none.
  * Cards with a photo put the text on top and the photo at the foot, so names and photos line up across the row.
- * Cards without one are text only, with the name straight after the quote.
+ * Cards without one are text only, set larger as a pull quote and (from tablet up) centred against the photo cards,
+ * which breaks the row's rhythm on purpose. On phones, where one card shows at a time, they stay top-aligned.
  */
 export function Testimonials() {
   const items = site.testimonials;
@@ -22,13 +23,17 @@ export function Testimonials() {
         <Carousel label="Customer testimonials">
           {items.map((t) => (
             <li key={t.name} className="w-[85%] shrink-0 snap-center sm:w-104 lg:w-[calc((100%-5rem)/2.5)] min-[112.5rem]:w-[calc((100%-7.5rem)/3.5)]">
-              <figure className="flex h-full flex-col">
+              <figure className={`flex h-full flex-col ${t.image ? "" : "md:justify-center"}`}>
                 <div className={`flex flex-col ${t.image ? "flex-1 pb-5" : ""}`}>
                   <div className="flex h-5 items-center justify-between gap-4">
                     <Stars rating={t.rating} />
                     <SourceLogo source={t.source} />
                   </div>
-                  <blockquote className={`mt-4 font-display text-lg leading-relaxed lg:text-xl lg:leading-relaxed ${t.image ? "flex-1" : ""}`}>
+                  <blockquote
+                    className={`mt-4 font-display ${
+                      t.image ? "flex-1 text-lg leading-relaxed lg:text-xl lg:leading-relaxed" : "text-lg leading-relaxed md:mt-6 md:text-2xl md:leading-snug lg:text-[1.7rem] lg:leading-snug"
+                    }`}
+                  >
                     “{t.quote}”
                   </blockquote>
                   <figcaption className="mt-6 text-base font-semibold">{t.name}</figcaption>
