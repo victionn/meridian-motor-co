@@ -1,13 +1,14 @@
 import Image from "next/image";
 import { site } from "@/content/site";
 import { Carousel } from "./carousel";
-import { Stars } from "./review-ratings";
+import { SourceLogo, Stars } from "./review-ratings";
 
 /**
  * Customer testimonials on the home page, as a sideways-scrolling row that runs the full width of the window
- * (same gutters as the header): two and a half cards show on a laptop, three and a half on a wide monitor. Quotes come from site.testimonials;
- * renders nothing if there are none. Text sits on top and the photo at the foot of each card, so quotes,
- * names and photos each line up across the row.
+ * (same gutters as the header): two and a half cards show on a laptop, three and a half on a wide monitor.
+ * Quotes come from site.testimonials; renders nothing if there are none.
+ * Cards with a photo put the text on top and the photo at the foot, so names and photos line up across the row.
+ * Cards without one are text only, with the name straight after the quote.
  */
 export function Testimonials() {
   const items = site.testimonials;
@@ -22,24 +23,32 @@ export function Testimonials() {
           {items.map((t) => (
             <li key={t.name} className="w-[85%] shrink-0 snap-center sm:w-104 lg:w-[calc((100%-5rem)/2.5)] min-[112.5rem]:w-[calc((100%-7.5rem)/3.5)]">
               <figure className="flex h-full flex-col">
-                <div className="flex flex-1 flex-col pb-5">
-                  <Stars rating={t.rating} />
-                  <blockquote className="mt-4 flex-1 font-display text-lg leading-relaxed lg:text-xl lg:leading-relaxed">“{t.quote}”</blockquote>
+                <div className={`flex flex-col ${t.image ? "flex-1 pb-5" : ""}`}>
+                  {/* Stars for Google reviews; Facebook reviews are recommendations and have no star score. */}
+                  <div className="flex h-5 items-center justify-between gap-4">
+                    {t.rating ? <Stars rating={t.rating} /> : <span className="text-xs font-semibold uppercase tracking-[0.16em] text-ink/60">Recommends</span>}
+                    <SourceLogo source={t.source} />
+                  </div>
+                  <blockquote className={`mt-4 font-display text-lg leading-relaxed lg:text-xl lg:leading-relaxed ${t.image ? "flex-1" : ""}`}>
+                    “{t.quote}”
+                  </blockquote>
                   <figcaption className="mt-6 flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
                     <span className="text-base font-semibold">{t.name}</span>
-                    <span className="text-sm text-ink/55">{t.detail}</span>
+                    {t.detail && <span className="text-sm text-ink/55">{t.detail}</span>}
                   </figcaption>
                 </div>
-                {/* Reviews without a photo get a quiet panel the same size, so names and photos stay level across the row. */}
-                <div className="relative aspect-3/2 shrink-0 overflow-hidden rounded-2xl bg-ink/5">
-                  {t.image ? (
-                    <Image src={t.image} alt={t.imageAlt ?? ""} fill sizes="(min-width: 1800px) 27vw, (min-width: 1024px) 36vw, (min-width: 640px) 416px, 85vw" className="object-cover" style={t.imagePosition ? { objectPosition: t.imagePosition } : undefined} />
-                  ) : (
-                    <span aria-hidden className="absolute inset-0 grid place-items-center font-display text-[9rem] leading-none text-ink/15">
-                      <span className="translate-y-[0.18em]">“</span>
-                    </span>
-                  )}
-                </div>
+                {t.image && (
+                  <div className="relative aspect-3/2 shrink-0 overflow-hidden rounded-2xl bg-ink/5">
+                    <Image
+                      src={t.image}
+                      alt={t.imageAlt ?? ""}
+                      fill
+                      sizes="(min-width: 1800px) 27vw, (min-width: 1024px) 36vw, (min-width: 640px) 416px, 85vw"
+                      className="object-cover"
+                      style={t.imagePosition ? { objectPosition: t.imagePosition } : undefined}
+                    />
+                  </div>
+                )}
               </figure>
             </li>
           ))}
