@@ -22,7 +22,7 @@ type Step = keyof typeof WEIGHTS;
 const MAX_SPEED = 300; // percent per second, so an instant load draws the ring in about 0.33s
 const HOLD_MS = 80; // pause on the finished logo before the black lifts
 const FADE_MS = 300; // matches the duration-300 on the overlay below
-const VIDEO_GRACE_MS = 400; // longest the ring waits on the first clip alone
+const GRACE_MS = 400; // longest the ring waits on the font or first clip once the banner image is in
 const GIVE_UP_MS = 4000; // never hold the visitor longer than this, whatever is still loading
 
 /**
@@ -61,7 +61,9 @@ export function SiteLoader() {
     // The window's own "load" event is deliberately not waited for: Safari holds it back until the banner video
     // has downloaded, which left the ring sitting half-drawn for seconds.
 
-    document.fonts.ready.then(mark("fonts"));
+    // Ask for the banner's text face directly. `document.fonts.ready` is no use here: Safari only resolves it
+    // once the whole page (video included) has finished loading, seconds after the font itself is in.
+    document.fonts.load('1rem "Inter Variable"').then(mark("fonts"), mark("fonts"));
 
     const poster = document.querySelector<HTMLImageElement>("[data-hero-poster]");
     if (!poster || poster.complete) done.poster = true;
@@ -72,7 +74,7 @@ export function SiteLoader() {
 
     // The first clip counts as ready once its first frame is decoded. Some browsers hold back video data until
     // playback starts (Safari, phones, low-power or data-saving modes), so this step is never allowed to stall
-    // the ring: once everything else is in, it gets VIDEO_GRACE_MS more and then the loader carries on. The
+    // the ring: once everything else is in, it gets GRACE_MS more and then the loader carries on. The
     // banner's still image is already underneath, so nothing looks missing if the clip arrives a moment later.
     const video = document.querySelector<HTMLVideoElement>("[data-hero-clip]");
     if (!video || video.readyState >= 2) done.video = true;
@@ -92,9 +94,15 @@ export function SiteLoader() {
     let shown = 0;
     let last = performance.now();
     let frame = requestAnimationFrame(function tick(now) {
-      if (!graceStarted && done.fonts && done.poster && !done.video) {
+      // Only the banner image is essential. Once it is in, anything still outstanding gets a short grace period.
+      if (!graceStarted && done.poster && !(done.fonts && done.video)) {
         graceStarted = true;
-        timers.push(setTimeout(mark("video"), VIDEO_GRACE_MS));
+        timers.push(
+          setTimeout(() => {
+            mark("fonts")();
+            mark("video")();
+          }, GRACE_MS),
+        );
       }
       const target = (Object.keys(done) as Step[]).reduce((sum, step) => sum + (done[step] ? WEIGHTS[step] : 0), 0);
       shown = Math.min(target, shown + ((now - last) / 1000) * MAX_SPEED);

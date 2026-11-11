@@ -54,7 +54,8 @@ export function SiteHeader() {
     };
   }, [panel]);
 
-  // On the home page the header floats over the hero footage until the visitor scrolls.
+  // On the home page the header floats, transparent, over the hero footage until the visitor scrolls.
+  // Everywhere else (and once scrolled) it is dark frosted glass: the page shows through, blurred.
   const home = pathname === "/";
   const floating = home && !scrolled && !panel;
   const toggle = (p: Exclude<Panel, null>) => setPanel((cur) => (cur === p ? null : p));
@@ -64,10 +65,10 @@ export function SiteHeader() {
       // Tabbing into a hidden header brings it back, so keyboard focus is never off screen.
       onFocus={() => setHidden(false)}
       className={`${home ? "fixed inset-x-0" : "sticky"} top-0 z-40 border-b transition-[translate,background-color,border-color] duration-300 ${
-        floating ? "border-transparent bg-transparent" : "border-line/60 bg-ink"
-      } ${hidden && !panel ? "-translate-y-[calc(100%+2.5rem)]" : "translate-y-0"}`}
+        floating ? "border-transparent bg-transparent" : "border-white/10 bg-ink/70 backdrop-blur-xl backdrop-saturate-150"
+      } ${hidden && !panel ? "-translate-y-full" : "translate-y-0"}`}
     >
-      <div className="edge-x grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-4">
+      <div className={`edge-x grid grid-cols-[1fr_auto_1fr] items-center gap-4 transition-[height] duration-300 ${floating ? "h-16" : "h-20 md:h-24"}`}>
         {/* Phones: a menu button that opens the full-screen panel below. */}
         <button
           type="button"
@@ -98,18 +99,14 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        {/* Always the roundel, never text. Over the hero it hangs full size below the bar. On the solid bar it stays
-            large enough to read: the lettering sits inside the bar and the bottom of the ring drops below it, on a
-            dark disc so it holds up over white page content. */}
-        <Link href="/" aria-label={`${site.name} home`} className={`relative z-10 h-16 transition-[width] duration-300 ${floating ? "w-24 md:w-40" : "w-24 md:w-28"}`}>
-          <span className={`absolute left-0 block aspect-930/723 w-full transition-[top] duration-300 ${floating ? "top-2 md:top-3" : "top-1.5"}`}>
-            {/* Disc: centred on the ring (52.9%, 50% of the artwork) and a touch larger than it. */}
-            <span
-              aria-hidden
-              className={`absolute left-[11.6%] top-[-3.1%] aspect-square w-[82.6%] rounded-full bg-ink transition-opacity duration-300 ${floating ? "opacity-0" : "opacity-100"}`}
-            />
-            <Logo className={`relative w-full text-paper ${floating ? "drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]" : ""}`} />
-          </span>
+        {/* Always the roundel, never text. Over the hero it hangs full size below the transparent bar; once the bar
+            turns to glass, the bar grows tall enough to hold the whole roundel at a size the lettering still reads. */}
+        <Link href="/" aria-label={`${site.name} home`} className={`relative h-full transition-[width] duration-300 ${floating ? "w-24 md:w-40" : "w-[5.4rem] md:w-28"}`}>
+          <Logo
+            className={`absolute left-0 w-full text-paper transition-[top] duration-300 ${
+              floating ? "top-2 drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)] md:top-3" : "top-1.5 md:top-1"
+            }`}
+          />
         </Link>
 
         <button
@@ -150,7 +147,7 @@ export function SiteHeader() {
       )}
 
       {panel === "menu" && (
-        <div id="site-menu" className="absolute inset-x-0 top-full h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line/60 bg-ink md:hidden">
+        <div id="site-menu" className="absolute inset-x-0 top-full h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line/60 bg-ink md:hidden">
           <div className="edge-x flex min-h-full flex-col justify-between gap-10 py-10">
             <nav aria-label="Main" className="flex flex-col gap-5">
               {site.nav.map((item) => (
