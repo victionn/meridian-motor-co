@@ -31,10 +31,7 @@ export function Testimonials() {
                   <blockquote className={`mt-4 font-display text-lg leading-relaxed lg:text-xl lg:leading-relaxed ${t.image ? "flex-1" : ""}`}>
                     “{t.quote}”
                   </blockquote>
-                  <figcaption className="mt-6 flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
-                    <span className="text-base font-semibold">{t.name}</span>
-                    {t.detail && <span className="text-sm text-ink/55">{t.detail}</span>}
-                  </figcaption>
+                  <figcaption className="mt-6 text-base font-semibold">{t.name}</figcaption>
                 </div>
                 {t.image && (
                   <div className="relative aspect-3/2 shrink-0 overflow-hidden rounded-2xl bg-ink/5">

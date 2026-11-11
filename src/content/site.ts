@@ -73,14 +73,12 @@ export const site = {
   // Names are first name plus the surname's initial.
   // Shown in this order: keep photo and text-only cards, and Google and Facebook reviews, mixed through the row.
   // `source` picks the logo on the card. `rating` is the star score (Facebook "recommends" reviews are shown as 5).
-  // `detail` (e.g. the car bought) is optional.
   // `image` is optional: a photo in public/testimonials/ (with `imageAlt` describing it).
   // `imagePosition` (a CSS object-position) picks which part of a tall photo shows in the 3:2 frame.
   testimonials: [
     {
       name: "Hubert S.",
       source: "Google",
-      detail: "Bentley owner",
       rating: 5,
       quote:
         "Anthony provided the best experience I have ever had in my many years of buying used cars. He was an absolute professional in the negotiations and the delivery of my Bentley. I can not recommend Anthony highly enough for your next luxury car purchase.",
@@ -97,7 +95,6 @@ export const site = {
     {
       name: "Bundy B.",
       source: "Google",
-      detail: "BMW owner, Queensland",
       rating: 5,
       quote:
         "Buying a car from interstate can be difficult. Thankfully Adarsh and Anthony made the purchase of my latest vehicle very smooth and easy. On my first visit to Sydney I was able to view and drive the car, as well as request some minor cosmetic work be attended to. On my second visit I simply drove in with my trade and over the next 2 days drove my new dream car back to Queensland. Loving it. Thanks guys, I hope I'll be back one day.",
@@ -114,7 +111,6 @@ export const site = {
     {
       name: "Vanessa S.",
       source: "Google",
-      detail: "Land Rover owner",
       rating: 5,
       quote:
         "My partner Liam and I purchased a Land Rover Discovery Sport and had the pleasure of dealing with Mistral. Mistral was the ultimate professional and her regular communication and updates regarding the purchase of our car was truly appreciated. I would not hesitate to deal with Mistral and Meridian Motor Co again. We thoroughly enjoyed our experience. Keep up the good work Mistral and Meridian Motor Co. Thanks - Vanessa and Liam",
@@ -132,7 +128,6 @@ export const site = {
       // First sentence of a longer review.
       name: "Neil",
       source: "Google",
-      detail: "Jeep owner",
       rating: 5,
       quote:
         "From first contact about the car we wanted to buy George has been 100% transparent, even sending 3 videos showing the car, plus numerous photos allowing us to close the deal with confidence.",
@@ -149,7 +144,7 @@ export const site = {
       imageAlt: "A car under a red satin cover in the showroom, waiting to be unveiled, beside a congratulations sign",
       imagePosition: "center 75%",
     },
-  ] as { name: string; source: "Google" | "Facebook"; detail?: string; rating: number; quote: string; image?: string; imageAlt?: string; imagePosition?: string }[],
+  ] as { name: string; source: "Google" | "Facebook"; rating: number; quote: string; image?: string; imageAlt?: string; imagePosition?: string }[],
 
   /** Slug of the car given the full-width feature at the top of the showroom (omit to show none). */
   showroomFeature: "1989-ferrari-testarossa-13171" as string | undefined,
