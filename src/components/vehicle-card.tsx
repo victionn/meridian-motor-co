@@ -72,7 +72,7 @@ export function FeaturedVehicle({ vehicle: v }: { vehicle: Vehicle }) {
   const [lead, ...rest] = v.description.split(/\n\s*\n/).filter(Boolean);
 
   return (
-    // Highlight border: see `feature-frame` in globals.css (graphite edge with a travelling band of light).
+    // Highlight border: see `feature-frame` in globals.css (graphite edge with a travelling band of yellow light).
     <div className="feature-frame rounded-[1.3rem]">
     <article className="grid overflow-hidden rounded-2xl bg-white text-ink xl:grid-cols-[1.6fr_1fr]">
       <Link href={`/cars/${v.slug}`} className="group relative block aspect-16/10 overflow-hidden xl:aspect-auto xl:min-h-[24rem]" tabIndex={-1} aria-hidden>
@@ -87,7 +87,7 @@ export function FeaturedVehicle({ vehicle: v }: { vehicle: Vehicle }) {
       </Link>
 
       <div className="flex flex-col p-8 sm:p-10 xl:p-9">
-        <p className="inline-flex items-center gap-2 self-start rounded-full bg-ink px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-paper">
+        <p className="inline-flex items-center gap-2 self-start rounded-full bg-[#fbbc04] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-ink">
           <svg aria-hidden viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="currentColor">
             <path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z" />
           </svg>

@@ -35,7 +35,7 @@ export default function VehiclePage({ params }: PageProps<"/cars/[slug]">) {
   return (
     // Light scheme, matching the showroom (the site default is dark).
     <div className="bg-paper text-ink [color-scheme:light]">
-      <div className="mx-auto max-w-[2000px] px-4 pb-20 pt-6 sm:px-6 sm:pt-8 xl:px-8">
+      <div className="mx-auto max-w-[2400px] px-3 pb-20 pt-6 sm:px-3 sm:pt-8">
         <Suspense fallback={<div className="aspect-3/2 max-w-5xl animate-pulse rounded-2xl bg-ink/6" />}>
           <VehicleDetail params={params} />
         </Suspense>
@@ -84,7 +84,7 @@ async function VehicleDetail({ params }: Pick<PageProps<"/cars/[slug]">, "params
       </nav>
 
       {/* Photos and write-up run down the left; the summary rides alongside, staying in view until "You might also like". */}
-      <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_25rem] lg:items-start xl:grid-cols-[minmax(0,1fr)_31rem] xl:gap-12 2xl:grid-cols-[minmax(0,1fr)_36rem] 2xl:gap-16">
+      <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_25rem] lg:items-start xl:grid-cols-[minmax(0,1fr)_31rem] xl:gap-8 2xl:grid-cols-[minmax(0,1fr)_36rem] 2xl:gap-10">
         <div className="min-w-0">
           <VehicleGallery images={v.images} alt={title} />
         </div>

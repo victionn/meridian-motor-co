@@ -34,7 +34,7 @@
 @utility container-x {
   @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
 }
-/* Featured-card border: a graphite edge with a band of light that travels slowly around it. */
+/* Featured-card border: a graphite edge with a band of yellow light that travels slowly around it. */
 @property --feature-angle {
   syntax: "<angle>";
   inherits: false;
@@ -51,9 +51,9 @@
     from var(--feature-angle),
     #1c1c1f 0deg,
     #1c1c1f 190deg,
-    #77777c 245deg,
-    #ffffff 285deg,
-    #77777c 325deg,
+    #8a6a0a 245deg,
+    #fbbc04 285deg,
+    #8a6a0a 325deg,
     #1c1c1f 360deg
   );
   box-shadow:
