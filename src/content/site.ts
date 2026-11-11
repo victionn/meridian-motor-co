@@ -71,6 +71,7 @@ export const site = {
 
   // Customer testimonials shown on the home page, below the social feed. Real reviews only, quoted word for word.
   // Names are first name plus the surname's initial.
+  // Shown in this order: keep photo and text-only cards, and Google and Facebook reviews, mixed through the row.
   // `source` picks the logo on the card. `rating` is the star score (Facebook "recommends" reviews are shown as 5).
   // `detail` (e.g. the car bought) is optional.
   // `image` is optional: a photo in public/testimonials/ (with `imageAlt` describing it).
@@ -87,6 +88,13 @@ export const site = {
       imageAlt: "Two customers beside a white Bentley Continental with a red bow on the bonnet in the showroom",
     },
     {
+      name: "Roy G.",
+      source: "Facebook",
+      rating: 5,
+      quote:
+        "Just want to mention how happy we were with our time at Meridian foremost with the hospitality service and knowledge of product shown to us by Lee. Nothing was a problem, moving cars answering questions and above all making our experience at Meridian a pleasant one. Lee also makes a great cup of coffee , definately an asset to the business 😊",
+    },
+    {
       name: "Bundy B.",
       source: "Google",
       detail: "BMW owner, Queensland",
@@ -95,6 +103,30 @@ export const site = {
         "Buying a car from interstate can be difficult. Thankfully Adarsh and Anthony made the purchase of my latest vehicle very smooth and easy. On my first visit to Sydney I was able to view and drive the car, as well as request some minor cosmetic work be attended to. On my second visit I simply drove in with my trade and over the next 2 days drove my new dream car back to Queensland. Loving it. Thanks guys, I hope I'll be back one day.",
       image: "/testimonials/bundy-b.jpg",
       imageAlt: "A dark blue BMW with a red bow on the bonnet in the showroom, beside a congratulations sign",
+    },
+    {
+      name: "Nikolas A.",
+      source: "Google",
+      rating: 5,
+      quote:
+        "Absolutely seamless experience. Purchased a car for my elderly father. The whole experience from start to finish was really good. They handled the trade-in, swapping of plates & made my dad feel really comfortable. Thank you Meridian. We'll definitely be back again.",
+    },
+    {
+      name: "Vanessa S.",
+      source: "Google",
+      detail: "Land Rover owner",
+      rating: 5,
+      quote:
+        "My partner Liam and I purchased a Land Rover Discovery Sport and had the pleasure of dealing with Mistral. Mistral was the ultimate professional and her regular communication and updates regarding the purchase of our car was truly appreciated. I would not hesitate to deal with Mistral and Meridian Motor Co again. We thoroughly enjoyed our experience. Keep up the good work Mistral and Meridian Motor Co. Thanks - Vanessa and Liam",
+      image: "/testimonials/vanessa-s.jpg",
+      imageAlt: "Two customers standing beside a red Land Rover Discovery Sport with a red bow on the bonnet",
+    },
+    {
+      name: "Jason H.",
+      source: "Facebook",
+      rating: 5,
+      quote:
+        "I enjoyed the knowledge, the personable interaction with staff and the quality of vehicles on offer. I drove away very satisfied with my vehicle and the assurance of extensive selection processes in place to acquire a reliable second hand luxury car. 🌟🌟🌟🌟🌟",
     },
     {
       // First sentence of a longer review.
@@ -108,23 +140,6 @@ export const site = {
       imageAlt: "A customer standing beside a red Jeep Grand Cherokee SRT with a red bow on the bonnet in the showroom",
     },
     {
-      name: "Vanessa S.",
-      source: "Google",
-      detail: "Land Rover owner",
-      rating: 5,
-      quote:
-        "My partner Liam and I purchased a Land Rover Discovery Sport and had the pleasure of dealing with Mistral. Mistral was the ultimate professional and her regular communication and updates regarding the purchase of our car was truly appreciated. I would not hesitate to deal with Mistral and Meridian Motor Co again. We thoroughly enjoyed our experience. Keep up the good work Mistral and Meridian Motor Co. Thanks - Vanessa and Liam",
-      image: "/testimonials/vanessa-s.jpg",
-      imageAlt: "Two customers standing beside a red Land Rover Discovery Sport with a red bow on the bonnet",
-    },
-    {
-      name: "Nikolas A.",
-      source: "Google",
-      rating: 5,
-      quote:
-        "Absolutely seamless experience. Purchased a car for my elderly father. The whole experience from start to finish was really good. They handled the trade-in, swapping of plates & made my dad feel really comfortable. Thank you Meridian. We'll definitely be back again.",
-    },
-    {
       name: "Vivian N.",
       source: "Google",
       rating: 5,
@@ -133,20 +148,6 @@ export const site = {
       image: "/testimonials/vivian-n.jpg",
       imageAlt: "A car under a red satin cover in the showroom, waiting to be unveiled, beside a congratulations sign",
       imagePosition: "center 75%",
-    },
-    {
-      name: "Roy G.",
-      source: "Facebook",
-      rating: 5,
-      quote:
-        "Just want to mention how happy we were with our time at Meridian foremost with the hospitality service and knowledge of product shown to us by Lee. Nothing was a problem, moving cars answering questions and above all making our experience at Meridian a pleasant one. Lee also makes a great cup of coffee , definately an asset to the business 😊",
-    },
-    {
-      name: "Jason H.",
-      source: "Facebook",
-      rating: 5,
-      quote:
-        "I enjoyed the knowledge, the personable interaction with staff and the quality of vehicles on offer. I drove away very satisfied with my vehicle and the assurance of extensive selection processes in place to acquire a reliable second hand luxury car. 🌟🌟🌟🌟🌟",
     },
   ] as { name: string; source: "Google" | "Facebook"; detail?: string; rating: number; quote: string; image?: string; imageAlt?: string; imagePosition?: string }[],
 
