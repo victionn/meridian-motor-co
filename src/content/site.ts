@@ -70,25 +70,26 @@ export const site = {
   ],
 
   // Customer testimonials shown on the home page, below the social feed. Real reviews only, quoted word for word.
+  // Names are first name plus the surname's initial.
   // `image` is optional: a photo in public/testimonials/ (with `imageAlt` describing it).
   // `imagePosition` (a CSS object-position) picks which part of a tall photo shows in the 3:2 frame.
   testimonials: [
     {
-      name: "Hubert Stadlmann",
+      name: "Hubert S.",
       detail: "Bentley owner · Google review",
       rating: 5,
       quote:
         "Anthony provided the best experience I have ever had in my many years of buying used cars. He was an absolute professional in the negotiations and the delivery of my Bentley. I can not recommend Anthony highly enough for your next luxury car purchase.",
-      image: "/testimonials/hubert-stadlmann.jpg",
+      image: "/testimonials/hubert-s.jpg",
       imageAlt: "Two customers beside a white Bentley Continental with a red bow on the bonnet in the showroom",
     },
     {
-      name: "Bundy Bear",
+      name: "Bundy B.",
       detail: "BMW owner, Queensland · Google review",
       rating: 5,
       quote:
         "Buying a car from interstate can be difficult. Thankfully Adarsh and Anthony made the purchase of my latest vehicle very smooth and easy. On my first visit to Sydney I was able to view and drive the car, as well as request some minor cosmetic work be attended to. On my second visit I simply drove in with my trade and over the next 2 days drove my new dream car back to Queensland. Loving it. Thanks guys, I hope I'll be back one day.",
-      image: "/testimonials/bundy-bear.jpg",
+      image: "/testimonials/bundy-b.jpg",
       imageAlt: "A dark blue BMW with a red bow on the bonnet in the showroom, beside a congratulations sign",
     },
     {
@@ -102,28 +103,28 @@ export const site = {
       imageAlt: "A customer standing beside a red Jeep Grand Cherokee SRT with a red bow on the bonnet in the showroom",
     },
     {
-      name: "Vanessa Swilks",
+      name: "Vanessa S.",
       detail: "Land Rover owner · Google review",
       rating: 5,
       quote:
         "My partner Liam and I purchased a Land Rover Discovery Sport and had the pleasure of dealing with Mistral. Mistral was the ultimate professional and her regular communication and updates regarding the purchase of our car was truly appreciated. I would not hesitate to deal with Mistral and Meridian Motor Co again. We thoroughly enjoyed our experience. Keep up the good work Mistral and Meridian Motor Co. Thanks - Vanessa and Liam",
-      image: "/testimonials/vanessa-swilks.jpg",
+      image: "/testimonials/vanessa-s.jpg",
       imageAlt: "Two customers standing beside a red Land Rover Discovery Sport with a red bow on the bonnet",
     },
     {
-      name: "Nikolas Alexopoulos",
+      name: "Nikolas A.",
       detail: "Google review",
       rating: 5,
       quote:
         "Absolutely seamless experience. Purchased a car for my elderly father. The whole experience from start to finish was really good. They handled the trade-in, swapping of plates & made my dad feel really comfortable. Thank you Meridian. We'll definitely be back again.",
     },
     {
-      name: "Vivian Nguyen",
+      name: "Vivian N.",
       detail: "Google review",
       rating: 5,
       quote:
         "I had a great experience purchasing my car with Adarsh. He was very professional and was very helpful throughout the whole process. The customer service and service offering at Meridian motor is amazing, they go above and beyond. I would recommend this car dealership to my friends and family!!",
-      image: "/testimonials/vivian-nguyen.jpg",
+      image: "/testimonials/vivian-n.jpg",
       imageAlt: "A car under a red satin cover in the showroom, waiting to be unveiled, beside a congratulations sign",
       imagePosition: "center 75%",
     },
