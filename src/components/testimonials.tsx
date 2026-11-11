@@ -22,12 +22,12 @@ export function Testimonials() {
           {items.map((t) => (
             <li key={t.name} className="w-[85%] shrink-0 snap-center sm:w-104 lg:w-[calc((100%-5rem)/2.5)] min-[112.5rem]:w-[calc((100%-7.5rem)/3.5)]">
               <figure className="flex h-full flex-col">
-                <div className="flex flex-1 flex-col pb-6">
+                <div className="flex flex-1 flex-col pb-5">
                   <Stars rating={t.rating} />
-                  <blockquote className="mt-5 flex-1 font-display text-lg leading-relaxed lg:text-xl lg:leading-relaxed">“{t.quote}”</blockquote>
-                  <figcaption className="mt-6 border-t border-ink/10 pt-4 text-sm">
-                    <span className="font-medium">{t.name}</span>
-                    <span className="block text-ink/60">{t.detail}</span>
+                  <blockquote className="mt-4 flex-1 font-display text-lg leading-relaxed lg:text-xl lg:leading-relaxed">“{t.quote}”</blockquote>
+                  <figcaption className="mt-6 flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+                    <span className="text-base font-semibold">{t.name}</span>
+                    <span className="text-sm text-ink/55">{t.detail}</span>
                   </figcaption>
                 </div>
                 {/* Reviews without a photo get a quiet panel the same size, so names and photos stay level across the row. */}

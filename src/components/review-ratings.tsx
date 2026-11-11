@@ -13,7 +13,7 @@ const LOGOS: Record<string, ReactNode> = {
   ),
 };
 
-/** Five stars with the rating shown as a filled portion (4.5 fills four and a half). */
+/** Five stars with the rating shown as a filled portion (4.5 fills four and a half). Filled stars are the familiar review yellow; the unfilled remainder is a faint tint of the surrounding text colour. */
 export function Stars({ rating }: { rating: number }) {
   const row = (className: string) => (
     <svg aria-hidden viewBox="0 0 100 20" className={`h-4 w-20 ${className}`} fill="currentColor">
@@ -26,7 +26,7 @@ export function Stars({ rating }: { rating: number }) {
     <span className="relative inline-block">
       {row("opacity-30")}
       <span className="absolute inset-y-0 left-0 overflow-hidden" style={{ width: `${(rating / 5) * 100}%` }}>
-        {row("")}
+        {row("text-[#fbbc04]")}
       </span>
     </span>
   );
