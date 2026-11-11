@@ -22,6 +22,7 @@ type Step = keyof typeof WEIGHTS;
 const MAX_SPEED = 300; // percent per second, so an instant load draws the ring in about 0.33s
 const HOLD_MS = 80; // pause on the finished logo before the black lifts
 const FADE_MS = 300; // matches the duration-300 on the overlay below
+const VIDEO_GRACE_MS = 400; // longest the ring waits on the first clip alone
 const GIVE_UP_MS = 7000; // never hold the visitor longer than this, whatever is still loading
 
 /**
@@ -69,12 +70,16 @@ export function SiteLoader() {
       poster.addEventListener("error", mark("poster"), { once: true });
     }
 
+    // The first clip counts as ready once its first frame is decoded. Some browsers hold back video data until
+    // playback starts (Safari, phones, low-power or data-saving modes), so this step is never allowed to stall
+    // the ring: once everything else is in, it gets VIDEO_GRACE_MS more and then the loader carries on. The
+    // banner's still image is already underneath, so nothing looks missing if the clip arrives a moment later.
     const video = document.querySelector<HTMLVideoElement>("[data-hero-clip]");
-    if (!video || video.readyState >= 3) done.video = true;
+    if (!video || video.readyState >= 2) done.video = true;
     else {
-      video.addEventListener("canplay", mark("video"), { once: true });
-      video.addEventListener("error", mark("video"), { once: true });
+      for (const type of ["loadeddata", "canplay", "error"]) video.addEventListener(type, mark("video"), { once: true });
     }
+    let graceStarted = false;
 
     timers.push(setTimeout(() => (Object.keys(done) as Step[]).forEach((step) => (done[step] = true)), GIVE_UP_MS));
 
@@ -87,6 +92,10 @@ export function SiteLoader() {
     let shown = 0;
     let last = performance.now();
     let frame = requestAnimationFrame(function tick(now) {
+      if (!graceStarted && done.page && done.fonts && done.poster && !done.video) {
+        graceStarted = true;
+        timers.push(setTimeout(mark("video"), VIDEO_GRACE_MS));
+      }
       const target = (Object.keys(done) as Step[]).reduce((sum, step) => sum + (done[step] ? WEIGHTS[step] : 0), 0);
       shown = Math.min(target, shown + ((now - last) / 1000) * MAX_SPEED);
       last = now;

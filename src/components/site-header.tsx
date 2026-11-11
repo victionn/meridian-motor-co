@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "@/content/site";
 import { Logo } from "./logo";
 
@@ -20,8 +20,22 @@ export function SiteHeader() {
     setPanel(null);
   }
 
+  // Slides away while scrolling down and returns on any scroll up, so it is out of the way while reading
+  // but always one flick away.
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 40);
+      // Ignore tiny movements (trackpad jitter, rubber-banding) and never hide near the top of the page.
+      if (y < 80) setHidden(false);
+      else if (y > lastY.current + 6) setHidden(true);
+      else if (y < lastY.current - 6) setHidden(false);
+      if (Math.abs(y - lastY.current) > 6) lastY.current = y;
+    };
+    lastY.current = window.scrollY;
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -47,9 +61,11 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`${home ? "fixed inset-x-0" : "sticky"} top-0 z-40 border-b transition-colors duration-300 ${
+      // Tabbing into a hidden header brings it back, so keyboard focus is never off screen.
+      onFocus={() => setHidden(false)}
+      className={`${home ? "fixed inset-x-0" : "sticky"} top-0 z-40 border-b transition-[translate,background-color,border-color] duration-300 ${
         floating ? "border-transparent bg-transparent" : "border-line/60 bg-ink/90 backdrop-blur"
-      }`}
+      } ${hidden && !panel ? "-translate-y-full" : "translate-y-0"}`}
     >
       <div className="edge-x grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-4">
         <button
@@ -67,16 +83,14 @@ export function SiteHeader() {
           <span className="max-sm:sr-only">{panel === "menu" ? "Close" : "Menu"}</span>
         </button>
 
-        {floating ? (
-          // Over the hero the full roundel hangs below the bar; once the bar turns solid it swaps to the wordmark.
-          <Link href="/" className="relative h-16 w-24 md:w-40">
-            <Logo className="absolute left-0 top-2 w-full text-paper md:top-3 drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)]" />
-          </Link>
-        ) : (
-          <Link href="/" className="whitespace-nowrap font-display text-xl tracking-tight">
-            Meridian <span className="text-accent">Motor Co</span>
-          </Link>
-        )}
+        {/* Always the roundel, never text: full size hanging below the bar over the hero, shrunk to sit inside the bar once it turns solid. */}
+        <Link href="/" aria-label={`${site.name} home`} className={`relative h-16 transition-[width] duration-300 ${floating ? "w-24 md:w-40" : "w-[4.2rem]"}`}>
+          <Logo
+            className={`absolute left-0 w-full text-paper transition-[top] duration-300 ${
+              floating ? "top-2 drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)] md:top-3" : "top-1.5"
+            }`}
+          />
+        </Link>
 
         <button
           type="button"
