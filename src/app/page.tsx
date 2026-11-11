@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Hero } from "@/components/hero";
 import { InstagramFeed } from "@/components/instagram-feed";
+import { ShowroomPreview } from "@/components/showroom-preview";
 import { SiteLoader } from "@/components/site-loader";
 import { Testimonials } from "@/components/testimonials";
 
@@ -9,6 +10,10 @@ export default function HomePage() {
     <>
       <SiteLoader />
       <Hero />
+
+      <Suspense fallback={null}>
+        <ShowroomPreview />
+      </Suspense>
 
       <Suspense fallback={null}>
         <InstagramFeed />
