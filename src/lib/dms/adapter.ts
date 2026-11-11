@@ -7,5 +7,10 @@ import type { Vehicle } from "../types";
  */
 export interface DmsAdapter {
   readonly name: string;
+  /**
+   * True when photos are copied into our own storage by a separate step (see easycars-sync.ts). The stock upsert
+   * then leaves each car's stored photos alone instead of replacing them with the feed's (empty) list.
+   */
+  readonly keepsStoredImages?: boolean;
   fetchStock(): Promise<Omit<Vehicle, "slug" | "featured">[]>;
 }

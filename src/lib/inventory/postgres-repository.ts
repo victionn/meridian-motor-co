@@ -199,6 +199,7 @@ function toVehicle(r: VehicleRow): Vehicle {
     vin: r.vin ?? undefined,
     description: r.description,
     features: r.features,
+    featureGroups: r.featureGroups.length ? r.featureGroups : undefined,
     images: r.images,
     spin360Url: r.spin360Url ?? undefined,
   };

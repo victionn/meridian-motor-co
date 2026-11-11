@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "**.imgix.net" },
+      // Vehicle photos copied from the stock feed (see src/lib/dms/image-stores.ts).
+      { protocol: "https", hostname: "**.public.blob.vercel-storage.com" },
       // Instagram feed thumbnails (see src/lib/instagram.ts).
       { protocol: "https", hostname: "**.cdninstagram.com" },
       { protocol: "https", hostname: "**.fbcdn.net" },

@@ -30,8 +30,7 @@
       "/vehicles/13171/7.jpg",
       "/vehicles/13171/8.jpg"
     ],
-    "featureGroups": [],
-    "vin": "ZFFAA17C000081721"
+    "featureGroups": []
   },
   {
     "id": "13441",
@@ -151,8 +150,7 @@
     ],
     "engine": "2.0L · 4-cylinder · 180 kW",
     "doors": 5,
-    "series": "8",
-    "vin": "WVWZZZCD0PW185254"
+    "series": "8"
   },
   {
     "id": "13582",
@@ -222,8 +220,7 @@
     ],
     "engine": "1.5L · 4-cylinder · 150 kW",
     "doors": 4,
-    "series": "W206",
-    "vin": "W1K2060422R043177"
+    "series": "W206"
   },
   {
     "id": "7414",
@@ -326,8 +323,7 @@
       }
     ],
     "engine": "5.5L · 12-cylinder · 325 kW",
-    "doors": 2,
-    "vin": "ZFFWP44C000108977"
+    "doors": 2
   },
   {
     "id": "13476",
@@ -408,8 +404,7 @@
     ],
     "engine": "3.0L · 6-cylinder · 250 kW",
     "doors": 5,
-    "series": "E3",
-    "vin": "WP1ZZZ9YZKDA00585"
+    "series": "E3"
   },
   {
     "id": "5261",
@@ -517,8 +512,7 @@
     ],
     "engine": "3.2L · 6-cylinder · 252 kW",
     "doors": 2,
-    "series": "E86",
-    "vin": "WBSDU92010LG19045"
+    "series": "E86"
   },
   {
     "id": "13148",
@@ -607,8 +601,7 @@
     ],
     "engine": "6.2L · 8-cylinder · 373 kW",
     "doors": 2,
-    "series": "C204",
-    "vin": "WDD2043772G382019"
+    "series": "C204"
   },
   {
     "id": "13432",
@@ -709,8 +702,7 @@
     ],
     "engine": "3.2L · 6-cylinder · 252 kW",
     "doors": 2,
-    "series": "E46",
-    "vin": "WBSBL92050JR00428"
+    "series": "E46"
   },
   {
     "id": "13606",
@@ -838,8 +830,7 @@
     ],
     "engine": "2.7L · 6-cylinder · 140 kW",
     "doors": 4,
-    "series": "110",
-    "vin": "SALLDHSR7EA453186"
+    "series": "110"
   },
   {
     "id": "13452",
@@ -953,8 +944,7 @@
     ],
     "engine": "2.9L · 6-cylinder · 280 kW",
     "doors": 5,
-    "series": "95B",
-    "vin": "WP1ZZZ95ZMLB63597"
+    "series": "95B"
   },
   {
     "id": "13593",
@@ -1085,8 +1075,7 @@
     ],
     "engine": "2.0L · 4-cylinder · 165 kW",
     "doors": 5,
-    "series": "W177",
-    "vin": "WDD1770472J057118"
+    "series": "W177"
   },
   {
     "id": "10248",
@@ -1169,7 +1158,6 @@
     ],
     "engine": "3.8L · 8-cylinder · 145 kW",
     "doors": 2,
-    "series": "R107",
-    "vin": "WDB10704522026121"
+    "series": "R107"
   }
 ]

@@ -1,3 +1,8 @@
 {
-  "crons": [{ "path": "/api/cron/sync-inventory", "schedule": "*/30 * * * *" }]
+  "crons": [
+    {
+      "path": "/api/cron/sync-inventory",
+      "schedule": "10,40 20-23,0-10 * * *"
+    }
+  ]
 }

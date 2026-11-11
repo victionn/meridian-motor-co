@@ -43,3 +43,6 @@ next-env.d.ts
 
 # local safety copies of older source
 /backup/
+
+# photos copied by the local image store (IMAGE_STORE=local)
+/public/stock/
