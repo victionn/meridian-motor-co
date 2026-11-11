@@ -114,8 +114,8 @@ export const site = {
   /** Slug of the car given the full-width feature at the top of the showroom (omit to show none). */
   showroomFeature: "1989-ferrari-testarossa-13171" as string | undefined,
 
-  // Menu links shown in the header's menu panel. Empty for now — add { label, href } entries as pages are built.
-  nav: [] as { label: string; href: string }[],
+  // Menu links shown in the header's menu panel. Add { label, href } entries as pages are built.
+  nav: [{ label: "Showroom", href: "/cars" }] as { label: string; href: string }[],
 } as const;
 
 export type Site = typeof site;

@@ -87,8 +87,10 @@ export function FeaturedVehicle({ vehicle: v }: { vehicle: Vehicle }) {
       </Link>
 
       <div className="flex flex-col p-8 sm:p-10 xl:p-9">
-        <p className="flex items-center gap-4 text-[0.7rem] font-medium uppercase tracking-[0.3em] text-ink/55">
-          <span aria-hidden className="h-px w-10 bg-ink/30" />
+        <p className="inline-flex items-center gap-2 self-start rounded-full bg-ink px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-paper">
+          <svg aria-hidden viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="currentColor">
+            <path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z" />
+          </svg>
           Featured
         </p>
         <h2 className="mt-4 font-classic text-4xl leading-[1.05] tracking-[-0.015em] sm:text-5xl xl:text-[2.6rem] 2xl:text-5xl">

@@ -17,7 +17,11 @@ const SWEEP = 254.7;
 const WEIGHTS = { page: 15, fonts: 20, poster: 30, video: 35 };
 type Step = keyof typeof WEIGHTS;
 
-const MAX_SPEED = 70; // percent per second, so even an instant load draws the ring in about 1.4s
+// The loader adds well under a second of its own when everything is already loaded: a third of a second to draw the ring,
+// a brief hold, then a 0.3s fade.
+const MAX_SPEED = 300; // percent per second, so an instant load draws the ring in about 0.33s
+const HOLD_MS = 80; // pause on the finished logo before the black lifts
+const FADE_MS = 300; // matches the duration-300 on the overlay below
 const GIVE_UP_MS = 7000; // never hold the visitor longer than this, whatever is still loading
 
 /**
@@ -99,8 +103,8 @@ export function SiteLoader() {
           played = true;
           release();
           setPhase("leaving");
-          timers.push(setTimeout(() => setPhase("done"), 900));
-        }, 350),
+          timers.push(setTimeout(() => setPhase("done"), FADE_MS + 20));
+        }, HOLD_MS),
       );
     });
 
@@ -118,7 +122,7 @@ export function SiteLoader() {
       id="site-loader"
       role="status"
       aria-label="Loading"
-      className={`fixed inset-0 z-100 bg-ink text-paper transition-opacity duration-700 ease-out ${phase === "leaving" ? "pointer-events-none opacity-0" : "opacity-100"}`}
+      className={`fixed inset-0 z-100 bg-ink text-paper transition-opacity duration-300 ease-out ${phase === "leaving" ? "pointer-events-none opacity-0" : "opacity-100"}`}
     >
       <noscript>
         <style>{"#site-loader{display:none}"}</style>

@@ -53,7 +53,7 @@ async function Inventory({ searchParams }: Pick<PageProps<"/cars">, "searchParam
       <aside className="hidden lg:sticky lg:top-24 lg:block lg:max-h-[calc(100svh-7rem)] lg:overflow-y-auto lg:rounded-2xl">{filters}</aside>
 
       <div className="min-w-0">
-        <form action="/cars" method="get" className="flex items-center gap-2 rounded-2xl border border-ink/15 bg-white p-2">
+        <form action="/cars" method="get" className="flex items-center gap-2 rounded-2xl border border-ink/10 bg-ink/5 p-2">
           <label htmlFor="showroom-q" className="sr-only">Search the showroom</label>
           <input
             id="showroom-q"
