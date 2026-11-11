@@ -71,6 +71,7 @@ export const site = {
 
   // Customer testimonials shown on the home page, below the social feed. Real reviews only, quoted word for word.
   // `image` is optional: a photo in public/testimonials/ (with `imageAlt` describing it).
+  // `imagePosition` (a CSS object-position) picks which part of a tall photo shows in the 3:2 frame.
   testimonials: [
     {
       name: "Hubert Stadlmann",
@@ -109,7 +110,24 @@ export const site = {
       image: "/testimonials/vanessa-swilks.jpg",
       imageAlt: "Two customers standing beside a red Land Rover Discovery Sport with a red bow on the bonnet",
     },
-  ] as { name: string; detail: string; rating: number; quote: string; image?: string; imageAlt?: string }[],
+    {
+      name: "Nikolas Alexopoulos",
+      detail: "Google review",
+      rating: 5,
+      quote:
+        "Absolutely seamless experience. Purchased a car for my elderly father. The whole experience from start to finish was really good. They handled the trade-in, swapping of plates & made my dad feel really comfortable. Thank you Meridian. We'll definitely be back again.",
+    },
+    {
+      name: "Vivian Nguyen",
+      detail: "Google review",
+      rating: 5,
+      quote:
+        "I had a great experience purchasing my car with Adarsh. He was very professional and was very helpful throughout the whole process. The customer service and service offering at Meridian motor is amazing, they go above and beyond. I would recommend this car dealership to my friends and family!!",
+      image: "/testimonials/vivian-nguyen.jpg",
+      imageAlt: "A car under a red satin cover in the showroom, waiting to be unveiled, beside a congratulations sign",
+      imagePosition: "center 75%",
+    },
+  ] as { name: string; detail: string; rating: number; quote: string; image?: string; imageAlt?: string; imagePosition?: string }[],
 
   /** Slug of the car given the full-width feature at the top of the showroom (omit to show none). */
   showroomFeature: "1989-ferrari-testarossa-13171" as string | undefined,

@@ -30,11 +30,16 @@ export function Testimonials() {
                     <span className="block text-ink/60">{t.detail}</span>
                   </figcaption>
                 </div>
-                {t.image && (
-                  <div className="relative aspect-3/2 shrink-0 overflow-hidden rounded-2xl">
-                    <Image src={t.image} alt={t.imageAlt ?? ""} fill sizes="(min-width: 1800px) 27vw, (min-width: 1024px) 36vw, (min-width: 640px) 416px, 85vw" className="object-cover" />
-                  </div>
-                )}
+                {/* Reviews without a photo get a quiet panel the same size, so names and photos stay level across the row. */}
+                <div className="relative aspect-3/2 shrink-0 overflow-hidden rounded-2xl bg-ink/5">
+                  {t.image ? (
+                    <Image src={t.image} alt={t.imageAlt ?? ""} fill sizes="(min-width: 1800px) 27vw, (min-width: 1024px) 36vw, (min-width: 640px) 416px, 85vw" className="object-cover" style={t.imagePosition ? { objectPosition: t.imagePosition } : undefined} />
+                  ) : (
+                    <span aria-hidden className="absolute inset-0 grid place-items-center font-display text-[9rem] leading-none text-ink/15">
+                      <span className="translate-y-[0.18em]">“</span>
+                    </span>
+                  )}
+                </div>
               </figure>
             </li>
           ))}
