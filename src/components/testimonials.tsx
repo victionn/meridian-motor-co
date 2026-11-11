@@ -24,9 +24,8 @@ export function Testimonials() {
             <li key={t.name} className="w-[85%] shrink-0 snap-center sm:w-104 lg:w-[calc((100%-5rem)/2.5)] min-[112.5rem]:w-[calc((100%-7.5rem)/3.5)]">
               <figure className="flex h-full flex-col">
                 <div className={`flex flex-col ${t.image ? "flex-1 pb-5" : ""}`}>
-                  {/* Stars for Google reviews; Facebook reviews are recommendations and have no star score. */}
                   <div className="flex h-5 items-center justify-between gap-4">
-                    {t.rating ? <Stars rating={t.rating} /> : <span className="text-xs font-semibold uppercase tracking-[0.16em] text-ink/60">Recommends</span>}
+                    <Stars rating={t.rating} />
                     <SourceLogo source={t.source} />
                   </div>
                   <blockquote className={`mt-4 font-display text-lg leading-relaxed lg:text-xl lg:leading-relaxed ${t.image ? "flex-1" : ""}`}>

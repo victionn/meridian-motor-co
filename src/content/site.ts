@@ -71,8 +71,8 @@ export const site = {
 
   // Customer testimonials shown on the home page, below the social feed. Real reviews only, quoted word for word.
   // Names are first name plus the surname's initial.
-  // `source` picks the logo on the card. Google reviews carry a star `rating`; Facebook ones are recommendations
-  // with no stars, so leave `rating` off. `detail` (e.g. the car bought) is optional.
+  // `source` picks the logo on the card. `rating` is the star score (Facebook "recommends" reviews are shown as 5).
+  // `detail` (e.g. the car bought) is optional.
   // `image` is optional: a photo in public/testimonials/ (with `imageAlt` describing it).
   // `imagePosition` (a CSS object-position) picks which part of a tall photo shows in the 3:2 frame.
   testimonials: [
@@ -137,16 +137,18 @@ export const site = {
     {
       name: "Roy G.",
       source: "Facebook",
+      rating: 5,
       quote:
         "Just want to mention how happy we were with our time at Meridian foremost with the hospitality service and knowledge of product shown to us by Lee. Nothing was a problem, moving cars answering questions and above all making our experience at Meridian a pleasant one. Lee also makes a great cup of coffee , definately an asset to the business 😊",
     },
     {
       name: "Jason H.",
       source: "Facebook",
+      rating: 5,
       quote:
         "I enjoyed the knowledge, the personable interaction with staff and the quality of vehicles on offer. I drove away very satisfied with my vehicle and the assurance of extensive selection processes in place to acquire a reliable second hand luxury car. 🌟🌟🌟🌟🌟",
     },
-  ] as { name: string; source: "Google" | "Facebook"; detail?: string; rating?: number; quote: string; image?: string; imageAlt?: string; imagePosition?: string }[],
+  ] as { name: string; source: "Google" | "Facebook"; detail?: string; rating: number; quote: string; image?: string; imageAlt?: string; imagePosition?: string }[],
 
   /** Slug of the car given the full-width feature at the top of the showroom (omit to show none). */
   showroomFeature: "1989-ferrari-testarossa-13171" as string | undefined,
