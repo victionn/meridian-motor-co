@@ -59,8 +59,9 @@ export async function InstagramFeed() {
                   </span>
                 )}
                 {post.caption && (
-                  <span className="absolute inset-x-0 bottom-0 line-clamp-3 bg-linear-to-t from-ink/90 to-transparent p-4 pt-10 text-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-                    {post.caption}
+                  // The clamp sits on an inner element: on the padded one, a fourth line shows through the bottom padding.
+                  <span className="absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/90 to-transparent p-4 pt-10 text-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                    <span className="line-clamp-3">{post.caption}</span>
                   </span>
                 )}
               </a>
