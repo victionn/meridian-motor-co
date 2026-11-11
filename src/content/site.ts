@@ -149,8 +149,8 @@ export const site = {
   /** Slug of the car given the full-width feature at the top of the showroom (omit to show none). */
   showroomFeature: "1989-ferrari-testarossa-13171" as string | undefined,
 
-  // Page links shown in the header bar, left of the logo. Add { label, href } entries as pages are built
-  // (the bar has room for about three on a phone).
+  // Page links: shown in the header bar on tablets and desktop, and in the menu panel on phones.
+  // Add { label, href } entries as pages are built.
   nav: [{ label: "Showroom", href: "/cars" }] as { label: string; href: string }[],
 } as const;
 

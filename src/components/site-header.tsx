@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { site } from "@/content/site";
 import { Logo } from "./logo";
 
-type Panel = "search" | null;
+type Panel = "menu" | "search" | null;
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -47,7 +47,11 @@ export function SiteHeader() {
       if (e.key === "Escape") setPanel(null);
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    if (panel === "menu") document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
   }, [panel]);
 
   // On the home page the header floats over the hero footage until the visitor scrolls.
@@ -64,14 +68,30 @@ export function SiteHeader() {
       } ${hidden && !panel ? "-translate-y-full" : "translate-y-0"}`}
     >
       <div className="edge-x grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-4">
-        {/* Page links sit in the bar itself (from site.nav); there is no menu to open. */}
-        <nav aria-label="Main" className="-ml-2 flex items-center gap-1 justify-self-start sm:gap-3">
+        {/* Phones: a menu button that opens the full-screen panel below. */}
+        <button
+          type="button"
+          aria-expanded={panel === "menu"}
+          aria-controls="site-menu"
+          aria-label={panel === "menu" ? "Close menu" : "Menu"}
+          onClick={() => toggle("menu")}
+          className="-ml-2 flex h-11 w-11 items-center justify-center justify-self-start text-paper transition-colors hover:text-accent md:hidden"
+        >
+          <span aria-hidden className="relative block h-3.5 w-6">
+            <span className={`absolute left-0 h-px w-6 bg-current transition ${panel === "menu" ? "top-1.75 rotate-45" : "top-0"}`} />
+            <span className={`absolute left-0 top-1.75 h-px w-6 bg-current transition ${panel === "menu" ? "opacity-0" : ""}`} />
+            <span className={`absolute left-0 h-px w-6 bg-current transition ${panel === "menu" ? "top-1.75 -rotate-45" : "top-3.5"}`} />
+          </span>
+        </button>
+
+        {/* Tablets and up: the page links sit in the bar itself (from site.nav). */}
+        <nav aria-label="Main" className="-ml-2 hidden items-center gap-3 justify-self-start md:flex">
           {site.nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               aria-current={pathname === item.href ? "page" : undefined}
-              className="flex h-11 items-center px-2 text-[0.8rem] font-medium uppercase tracking-[0.16em] text-paper transition-colors hover:text-accent sm:text-base sm:tracking-[0.18em]"
+              className="flex h-11 items-center px-2 text-base font-medium uppercase tracking-[0.18em] text-paper transition-colors hover:text-accent"
             >
               {item.label}
             </Link>
@@ -121,6 +141,28 @@ export function SiteHeader() {
             />
             <button className="btn-primary px-5! py-2.5!">Search</button>
           </form>
+        </div>
+      )}
+
+      {panel === "menu" && (
+        <div id="site-menu" className="absolute inset-x-0 top-full h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line/60 bg-ink md:hidden">
+          <div className="edge-x flex min-h-full flex-col justify-between gap-10 py-10">
+            <nav aria-label="Main" className="flex flex-col gap-5">
+              {site.nav.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setPanel(null)}
+                  className="w-fit font-display text-4xl tracking-tight transition-colors hover:text-accent sm:text-5xl"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <a href={site.phone.href} className="btn-ghost w-full sm:w-fit">
+              Call {site.phone.display}
+            </a>
+          </div>
         </div>
       )}
     </header>
