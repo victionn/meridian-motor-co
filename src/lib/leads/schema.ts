@@ -1,17 +1,17 @@
 import { z } from "zod";
 
-export const LEAD_TYPES = ["enquiry", "test-drive", "finance", "valuation", "service", "contact"] as const;
+export const LEAD_TYPES = ["enquiry", "test-drive", "finance", "valuation", "service", "contact", "wholesale"] as const;
 export type LeadType = (typeof LEAD_TYPES)[number];
 
 const phone = z
-  .string()
+  .string({ error: "Enter your phone number" })
   .trim()
   .regex(/^[0-9+()\s-]{8,20}$/, "Enter a valid phone number");
 
 export const LeadSchema = z.object({
   type: z.enum(LEAD_TYPES),
-  name: z.string().trim().min(2, "Enter your name").max(100),
-  email: z.string().trim().email("Enter a valid email"),
+  name: z.string({ error: "Enter your name" }).trim().min(2, "Enter your name").max(100),
+  email: z.string({ error: "Enter your email" }).trim().email("Enter a valid email"),
   phone,
   message: z.string().trim().max(2000).optional(),
 
@@ -22,9 +22,12 @@ export const LeadSchema = z.object({
   rego: z.string().trim().max(12).optional(),
   tradeIn: z.string().trim().max(200).optional(),
   pageUrl: z.string().max(500).optional(),
+  company: z.string().trim().max(120).optional(),
+  /** What the enquiry is about, from the contact form's "reason" list. */
+  reason: z.string().trim().max(60).optional(),
 
-  // Honeypot — real users never fill this.
-  company: z.string().max(0).optional(),
+  // Honeypot — hidden from people, so only bots fill it in.
+  website: z.string().max(0).optional(),
 });
 
 export type Lead = z.infer<typeof LeadSchema>;

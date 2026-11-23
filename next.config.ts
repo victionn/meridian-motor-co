@@ -37,7 +37,7 @@ const nextConfig: NextConfig = {
       { source: "/help-contact", destination: "/contact", permanent: true },
       { source: "/sell-car", destination: "/sell", permanent: true },
       { source: "/car-service", destination: "/service", permanent: true },
-      { source: "/wholesale-partner", destination: "/contact", permanent: true },
+      { source: "/wholesale-partner", destination: "/wholesale", permanent: true },
       { source: "/privacy-policy", destination: "/privacy", permanent: true },
     ];
   },

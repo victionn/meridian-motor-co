@@ -59,6 +59,10 @@ export function SiteHeader() {
   const home = pathname === "/";
   const floating = home && !scrolled && !panel;
   const toggle = (p: Exclude<Panel, null>) => setPanel((cur) => (cur === p ? null : p));
+  const isCurrent = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const half = Math.ceil(site.nav.length / 2);
+  const leftNav = site.nav.slice(0, half);
+  const rightNav = site.nav.slice(half);
 
   return (
     <header
@@ -76,7 +80,7 @@ export function SiteHeader() {
           aria-controls="site-menu"
           aria-label={panel === "menu" ? "Close menu" : "Menu"}
           onClick={() => toggle("menu")}
-          className="-ml-2 flex h-11 w-11 items-center justify-center justify-self-start text-paper transition-colors hover:text-accent md:hidden"
+          className="-ml-2 flex h-11 w-11 items-center justify-center justify-self-start text-paper transition-colors hover:text-accent lg:hidden"
         >
           <span aria-hidden className="relative block h-3.5 w-6">
             <span className={`absolute left-0 h-px w-6 bg-current transition ${panel === "menu" ? "top-1.75 rotate-45" : "top-0"}`} />
@@ -85,17 +89,10 @@ export function SiteHeader() {
           </span>
         </button>
 
-        {/* Tablets and up: the page links sit in the bar itself (from site.nav). */}
-        <nav aria-label="Main" className="-ml-2 hidden items-center gap-3 justify-self-start md:flex">
-          {site.nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={pathname === item.href ? "page" : undefined}
-              className="flex h-11 items-center px-2 text-base font-medium uppercase tracking-[0.18em] text-paper transition-colors hover:text-accent"
-            >
-              {item.label}
-            </Link>
+        {/* Laptops and up: the page links sit in the bar itself, split either side of the logo (from site.nav). */}
+        <nav aria-label="Main" className="-ml-2 hidden items-center gap-1 justify-self-start lg:flex xl:gap-3">
+          {leftNav.map((item) => (
+            <NavLink key={item.href} item={item} current={isCurrent(item.href)} />
           ))}
         </nav>
 
@@ -109,13 +106,19 @@ export function SiteHeader() {
           />
         </Link>
 
+        <div className="-mr-2 flex items-center gap-1 justify-self-end xl:gap-3">
+          <nav aria-label="More" className="hidden items-center gap-1 lg:flex xl:gap-3">
+            {rightNav.map((item) => (
+              <NavLink key={item.href} item={item} current={isCurrent(item.href)} />
+            ))}
+          </nav>
         <button
           type="button"
           aria-expanded={panel === "search"}
           aria-controls="site-search"
           aria-label={panel === "search" ? "Close search" : "Search stock"}
           onClick={() => toggle("search")}
-          className="-mr-2 flex h-11 w-11 items-center justify-center justify-self-end text-paper transition-colors hover:text-accent"
+          className="flex h-11 w-11 items-center justify-center text-paper transition-colors hover:text-accent"
         >
           <svg aria-hidden viewBox="0 0 24 24" className="h-6 w-6 sm:h-7 sm:w-7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
             {panel === "search" ? (
@@ -128,6 +131,7 @@ export function SiteHeader() {
             )}
           </svg>
         </button>
+        </div>
       </div>
 
       {panel === "search" && (
@@ -147,13 +151,14 @@ export function SiteHeader() {
       )}
 
       {panel === "menu" && (
-        <div id="site-menu" className="absolute inset-x-0 top-full h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line/60 bg-ink md:hidden">
+        <div id="site-menu" className="absolute inset-x-0 top-full h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line/60 bg-ink lg:hidden">
           <div className="edge-x flex min-h-full flex-col justify-between gap-10 py-10">
             <nav aria-label="Main" className="flex flex-col gap-5">
               {site.nav.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={isCurrent(item.href) ? "page" : undefined}
                   onClick={() => setPanel(null)}
                   className="w-fit font-display text-4xl tracking-tight transition-colors hover:text-accent sm:text-5xl"
                 >
@@ -168,5 +173,17 @@ export function SiteHeader() {
         </div>
       )}
     </header>
+  );
+}
+
+function NavLink({ item, current }: { item: { label: string; href: string }; current: boolean }) {
+  return (
+    <Link
+      href={item.href}
+      aria-current={current ? "page" : undefined}
+      className="relative flex h-11 items-center px-2 text-sm font-medium uppercase tracking-[0.18em] text-paper transition-colors after:absolute after:inset-x-2 after:bottom-2 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform hover:after:scale-x-100 aria-[current=page]:after:scale-x-100 xl:text-base"
+    >
+      {item.label}
+    </Link>
   );
 }

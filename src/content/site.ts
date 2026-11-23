@@ -25,6 +25,8 @@ export const site = {
     name: "Meridian Garage",
     phone: { display: "(02) 9198 0928", href: "tel:+61291980928" },
     email: "enquiries@meridiangarage.com.au",
+    website: "https://www.meridiangarage.com.au/",
+    bookingUrl: "https://book.meridiangarage.com.au/service",
     hours: [
       { days: "Mon – Fri", time: "8:00am – 5:00pm" },
       { days: "Sat – Sun", time: "Closed" },
@@ -151,7 +153,20 @@ export const site = {
 
   // Page links: shown in the header bar on tablets and desktop, and in the menu panel on phones.
   // Add { label, href } entries as pages are built.
-  nav: [{ label: "Showroom", href: "/cars" }] as { label: string; href: string }[],
+  // Header links. On wide screens the first half sits left of the logo and the rest to its right; below that they
+  // move into the menu panel. `footer` lists extra links shown only in the footer.
+  nav: [
+    { label: "Showroom", href: "/cars" },
+    { label: "Sell", href: "/sell" },
+    { label: "Finance", href: "/finance" },
+    { label: "Service", href: "/service" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
+  ] as { label: string; href: string }[],
+  footer: [
+    { label: "Wholesale partners", href: "/wholesale" },
+    { label: "Privacy policy", href: "/privacy" },
+  ] as { label: string; href: string }[],
 } as const;
 
 export type Site = typeof site;

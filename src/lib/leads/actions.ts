@@ -16,7 +16,7 @@ export async function submitLead(_prev: LeadFormState, formData: FormData): Prom
       fieldErrors[key] ??= issue.message;
     }
     // Honeypot tripped: pretend success so bots learn nothing.
-    if (fieldErrors.company) return { status: "success" };
+    if (fieldErrors.website) return { status: "success" };
     return { status: "error", message: "Please check the highlighted fields.", fieldErrors };
   }
 

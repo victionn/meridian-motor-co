@@ -36,6 +36,8 @@ class HubSpotCrm implements CrmClient {
       preferred_date: lead.preferredDate,
       rego: lead.rego,
       trade_in: lead.tradeIn,
+      company: lead.company,
+      enquiry_reason: lead.reason,
     };
     const res = await fetch(
       `https://api.hsforms.com/submissions/v3/integration/submit/${this.portalId}/${this.formGuid}`,
