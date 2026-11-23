@@ -7,8 +7,11 @@
   --color-line: #26262a;
   --color-muted: #9a9aa2;
   --color-paper: #ffffff;
-  --color-accent: #d6d6d8;
-  --color-accent-strong: #e9e9eb;
+  /* Meridian Gold: the sun at its meridian. Bright signal yellow for calls to action and highlights (use sparingly),
+     a deep bronze for quiet details and for anything that sits on the white pages, where the yellow is too faint. */
+  --color-accent: #fbbc04;
+  --color-accent-strong: #ffd34d;
+  --color-accent-deep: #8a6a0a;
 
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
@@ -28,6 +31,10 @@
   }
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-accent;
+  }
+  /* Yellow barely shows against white, so focus rings on the light pages use the deep bronze instead. */
+  .bg-paper :focus-visible {
+    @apply outline-accent-deep;
   }
 }
 
@@ -51,9 +58,9 @@
     from var(--feature-angle),
     #1c1c1f 0deg,
     #1c1c1f 190deg,
-    #8a6a0a 245deg,
-    #fbbc04 285deg,
-    #8a6a0a 325deg,
+    var(--color-accent-deep) 245deg,
+    var(--color-accent) 285deg,
+    var(--color-accent-deep) 325deg,
     #1c1c1f 360deg
   );
   box-shadow:
@@ -73,7 +80,7 @@
   @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-colors disabled:opacity-50;
 }
 @utility btn-primary {
-  @apply btn bg-paper text-ink hover:bg-accent-strong;
+  @apply btn bg-accent text-ink hover:bg-accent-strong;
 }
 @utility btn-ghost {
   @apply btn border border-line text-paper hover:border-accent hover:text-accent;

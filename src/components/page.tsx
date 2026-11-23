@@ -79,7 +79,7 @@ export function PageHero({
 export function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
   return (
     <p className={`flex items-center gap-4 text-[0.72rem] font-medium uppercase tracking-[0.3em] ${light ? "text-paper/75" : "text-ink/55"}`}>
-      <span aria-hidden className={`h-px w-10 ${light ? "bg-paper/50" : "bg-ink/30"}`} />
+      <span aria-hidden className={`h-px w-10 ${light ? "bg-accent" : "bg-accent-deep"}`} />
       {children}
     </p>
   );
@@ -127,7 +127,7 @@ export function ButtonLink({
   const styles = {
     "primary-dark": "bg-ink text-paper hover:bg-ink/85",
     "secondary-dark": "border border-ink/30 text-ink hover:border-ink",
-    "primary-light": "bg-paper text-ink hover:bg-accent-strong",
+    "primary-light": "bg-accent text-ink hover:bg-accent-strong",
     "secondary-light": "border border-paper/50 text-paper hover:border-paper",
   }[`${variant}-${tone}`];
   const className = `inline-flex items-center justify-center gap-3 rounded-full px-7 py-4 text-[0.8rem] font-medium uppercase tracking-[0.16em] transition-colors ${styles}`;
