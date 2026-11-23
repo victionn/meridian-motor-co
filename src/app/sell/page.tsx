@@ -17,9 +17,15 @@ export default function SellPage() {
         eyebrow="Sell or trade in"
         title="We pay more for luxury cars"
         intro="A digital inspection from your phone, a market-rate valuation and same-day payment — or put it towards your next car."
-        image="/pages/sell.jpg"
+        // The still is the clip's first frame, so the hand-over from photo to motion is invisible.
+        image="/pages/sell-hero-poster.jpg"
         imageAlt="A black Mercedes-AMG GT on a racetrack with a Meridian number plate"
         imagePosition="65% 60%"
+        video={[
+          { src: "/pages/sell-hero-mobile.mp4", type: "video/mp4", media: "(max-width: 767px)" },
+          { src: "/pages/sell-hero-desktop.webm", type: "video/webm" },
+          { src: "/pages/sell-hero-desktop.mp4", type: "video/mp4" },
+        ]}
       >
         <ButtonLink href="#valuation" tone="light">Get a valuation</ButtonLink>
         <ButtonLink href={site.phone.href} tone="light" variant="secondary">Call {site.phone.display}</ButtonLink>

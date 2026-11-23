@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { site } from "@/content/site";
+import { HeroLoop } from "./hero-loop";
 
 /**
  * Building blocks for the content pages (Sell, Finance, Service, About, Contact, Wholesale, Privacy), in the same
@@ -29,6 +30,7 @@ export function PageHero({
   image,
   imageAlt = "",
   imagePosition,
+  video,
   children,
 }: {
   title: string;
@@ -38,6 +40,8 @@ export function PageHero({
   imageAlt?: string;
   /** CSS object-position, to keep the car in frame when the photo is cropped. */
   imagePosition?: string;
+  /** Optional looping clip played over the photo (the photo should be the clip's first frame). */
+  video?: { src: string; type: string; media?: string }[];
   children?: ReactNode;
 }) {
   if (!image) {
@@ -57,6 +61,7 @@ export function PageHero({
     <section className="relative isolate overflow-hidden bg-ink text-paper">
       <div className="relative aspect-4/3 sm:aspect-16/9 md:aspect-auto md:h-[min(72svh,46rem)] md:min-h-[30rem]">
         <Image src={image} alt={imageAlt} fill priority sizes="100vw" className="object-cover" style={imagePosition ? { objectPosition: imagePosition } : undefined} />
+        {video && <HeroLoop sources={video} position={imagePosition} />}
         {/* Shade the lower left, where the title sits, and the top under the header. */}
         <div className="absolute inset-0 bg-linear-to-t from-ink/85 via-ink/25 to-ink/30" />
         <div className="absolute inset-0 hidden bg-linear-to-r from-ink/60 via-ink/15 to-transparent md:block" />
