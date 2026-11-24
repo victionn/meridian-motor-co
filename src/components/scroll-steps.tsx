@@ -71,7 +71,12 @@ export function ScrollSteps({ title, steps }: { title: string; steps: { title: s
   return (
     <section className="mt-16 border-t border-ink/15 sm:mt-24">
       <div ref={wrapper}>
-        <div ref={pinned} className="pt-14 sm:pt-20 lg:motion-safe:sticky lg:motion-safe:top-[max(1rem,calc(50svh-14rem))]">
+        {/* Pinned, it reaches down to the bottom of the screen, so the next section stays out of view until the steps
+            let go and then rises with them, rather than sliding up under steps that are still pinned. */}
+        <div
+          ref={pinned}
+          className="pt-14 sm:pt-20 lg:motion-safe:sticky lg:motion-safe:top-[max(1rem,calc(50svh-14rem))] lg:motion-safe:min-h-[min(calc(100svh-1rem),calc(50svh+14rem))]"
+        >
           <h2 className="max-w-4xl font-classic text-4xl leading-[1.05] tracking-[-0.015em] sm:text-5xl">{title}</h2>
           <ol ref={list} className="mt-10 grid gap-y-12 sm:mt-12 lg:grid-cols-3 lg:gap-x-10">
             {steps.map((step, i) => {
