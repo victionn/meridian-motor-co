@@ -10,7 +10,7 @@ export function SiteFooter() {
   const link = "text-paper/85 transition-colors hover:text-paper";
 
   return (
-    <footer className="bg-midnight text-paper [color-scheme:dark]">
+    <footer className="bg-ink text-paper [color-scheme:dark]">
       {/* A fine cobalt-to-tangerine rule along the top edge. */}
       <div aria-hidden className="h-0.5 bg-linear-to-r from-cobalt to-accent" />
       <div className="edge-x mx-auto max-w-[2400px] pb-16 pt-16 sm:pb-20 sm:pt-20">
@@ -66,8 +66,8 @@ export function SiteFooter() {
 
       </div>
 
-      {/* The copyright and social bar: a full-width black strip under the midnight footer. */}
-      <div className="bg-ink">
+      {/* The copyright and social bar, ruled off from the columns above. */}
+      <div className="border-t border-paper/10">
         <div className="edge-x mx-auto flex max-w-[2400px] flex-wrap items-center justify-between gap-6 py-6 text-sm text-paper/55">
           <p>© <CopyrightYear /> {site.name}</p>
           <div className="flex items-center gap-5">
