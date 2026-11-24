@@ -25,7 +25,14 @@ export function HeroLoop({
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
     if (saveData || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     video.muted = true;
-    video.play().catch(() => {});
+    // Play while on screen, pause while not. Leaving the page (Next keeps it, hidden) or scrolling away lets the
+    // browser pause the clip, and nothing else would restart it. A play-once clip that has finished stays put.
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) video.pause();
+      else if (!video.ended) video.play().catch(() => {});
+    });
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   return (

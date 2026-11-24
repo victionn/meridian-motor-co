@@ -54,6 +54,7 @@ const LEAD_S = 1.6;
  */
 export function HeroVideo({ onShow }: { /** Called as each clip starts fading in. */ onShow?: (id: HeroClipId) => void }) {
   const videos = useRef<(HTMLVideoElement | null)[]>([]);
+  const box = useRef<HTMLDivElement>(null);
   // `shown` fades in on top; `under` is the previous clip, kept opaque beneath it so the poster never shows through.
   const [layers, setLayers] = useState<{ shown: number | null; under: number | null }>({ shown: null, under: null });
   const shownRef = useRef<number | null>(null);
@@ -121,9 +122,35 @@ export function HeroVideo({ onShow }: { /** Called as each clip starts fading in
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Play only while the banner is on screen. Leaving the page (Next keeps it, hidden), switching tabs or scrolling
+  // it out of view lets the browser pause the clips (Safari does so for hidden video), and nothing would restart
+  // them; so on the way out park them, and on the way back carry on with the clip that was showing.
+  useEffect(() => {
+    const el = box.current;
+    if (!el) return;
+    const all = videos.current;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (shownRef.current === null) return; // not started yet: the first clip waits for the loader
+      if (entry.isIntersecting) {
+        const shown = all[shownRef.current];
+        if (shown?.paused) {
+          shown.muted = true;
+          shown.play().catch(() => {});
+        }
+      } else {
+        // Drop any half-finished hand-over, or `start` would treat that clip as still starting and never move on.
+        cancelAnimationFrame(timers.current.frame ?? 0);
+        starting.current = null;
+        all.forEach((v) => v?.pause());
+      }
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     // `isolate` keeps the layer order below inside this box, so the clips cannot rise above the hero copy.
-    <div aria-hidden className="absolute inset-0 isolate overflow-hidden">
+    <div ref={box} aria-hidden className="absolute inset-0 isolate overflow-hidden">
       <picture>
         <source media={MOBILE} type="image/webp" srcSet="/hero/rs7-hero-mobile-poster.webp" />
         <source media={MOBILE} srcSet="/hero/rs7-hero-mobile-poster.jpg" />
