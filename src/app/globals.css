@@ -207,7 +207,8 @@
    Hidden only with scripting on and no reduced-motion preference; the script adds `in` as each comes into view. */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   /* :where() keeps these at zero specificity, so the `.in` rule below always wins. */
-  [data-reveal] :where(p:not(li p, form p, dl p, figure p), li, form, a.rounded-full, :is(h1, h2) + div:not(:has(ul, ol, form))) {
+  /* Anything inside [data-no-reveal] (a section with its own entrance, like ScrollSteps) is left alone. */
+  [data-reveal] :where(:is(p:not(li p, form p, dl p, figure p), li, form, a.rounded-full, :is(h1, h2) + div:not(:has(ul, ol, form))):not([data-no-reveal] *)) {
     opacity: 0;
     transform: translateY(22px);
     filter: blur(6px);
@@ -218,7 +219,7 @@
     transition-delay: var(--d, 0s);
   }
   /* Headings rise out of a mask, top first. */
-  [data-reveal] :where(h1, h2) {
+  [data-reveal] :where(:is(h1, h2):not([data-no-reveal] *)) {
     /* Only the bottom edge of the mask moves; the others sit well outside so text-shadows aren't clipped. */
     clip-path: inset(-50% -50% 100% -50%);
     transform: translateY(0.3em);

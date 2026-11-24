@@ -69,7 +69,8 @@ export function ScrollSteps({ title, steps }: { title: string; steps: { title: s
   }, []);
 
   return (
-    <section className="mt-16 border-t border-ink/15 sm:mt-24">
+    // Opts out of TextReveal: the steps run their own entrance as you scroll.
+    <section data-no-reveal className="mt-16 border-t border-ink/15 sm:mt-24">
       <div ref={wrapper}>
         {/* Pinned, it reaches down to the bottom of the screen, so the next section stays out of view until the steps
             let go and then rises with them, rather than sliding up under steps that are still pinned. */}

@@ -56,7 +56,8 @@ export function TextReveal({ children }: { children: ReactNode }) {
     const track = (scope: Element) => {
       const found = [...(scope.matches(TARGETS) ? [scope] : []), ...scope.querySelectorAll(TARGETS)] as HTMLElement[];
       found.forEach((target) => {
-        if (tracked.has(target) || target.classList.contains("in")) return;
+        // Sections with their own entrance opt out with data-no-reveal (matching the CSS).
+        if (tracked.has(target) || target.classList.contains("in") || target.closest("[data-no-reveal]")) return;
         tracked.add(target);
         const heading = target.matches("h1, h2") && target.parentElement;
         const watched = heading || target;

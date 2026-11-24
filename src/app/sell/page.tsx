@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LeadForm } from "@/components/lead-form";
 import { ButtonLink, CertifiedSection, PageBody, PageHero, PageSection, Points, TickList } from "@/components/page";
+import { ScrollSteps } from "@/components/scroll-steps";
 import { TextReveal } from "@/components/text-reveal";
 import { site } from "@/content/site";
 
@@ -54,16 +55,14 @@ export default function SellPage() {
           />
         </section>
 
-        <PageSection title="Sell your car in three steps">
-          <Points
-            numbered
-            items={[
-              { title: "Quick inspection", body: "Receive a link to our digital inspection and complete it in under five minutes." },
-              { title: "Receive a valuation", body: "Get our competitive offer, then decide on a straight sale or a trade-in on one of our cars." },
-              { title: "Payment and handover", body: "Bring the car in for a final check and receive immediate payment through Osko — or trade in and drive away in your next car." },
-            ]}
-          />
-        </PageSection>
+        <ScrollSteps
+          title="Sell your car in three steps"
+          steps={[
+            { title: "Quick inspection", body: "Receive a link to our digital inspection and complete it in under five minutes." },
+            { title: "Receive a valuation", body: "Get our competitive offer, then decide on a straight sale or a trade-in on one of our cars." },
+            { title: "Payment and handover", body: "Bring the car in for a final check and receive immediate payment through Osko — or trade in and drive away in your next car." },
+          ]}
+        />
 
         <PageSection
           title="Valuations from the precision experts"
