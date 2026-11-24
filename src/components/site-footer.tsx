@@ -10,7 +10,9 @@ export function SiteFooter() {
   const link = "text-paper/85 transition-colors hover:text-paper";
 
   return (
-    <footer className="bg-ink text-paper">
+    <footer className="bg-midnight text-paper [color-scheme:dark]">
+      {/* A fine cobalt-to-tangerine rule along the top edge. */}
+      <div aria-hidden className="h-0.5 bg-linear-to-r from-cobalt to-accent" />
       <div className="edge-x mx-auto max-w-[2400px] pb-10 pt-16 sm:pt-20">
         <div className="grid gap-12 md:grid-cols-2 xl:grid-cols-[1.2fr_1fr_1fr_1fr]">
           <div>

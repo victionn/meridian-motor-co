@@ -80,7 +80,7 @@ function Choice({ label, value, options, onChange, format }: { label: string; va
             type="button"
             onClick={() => onChange(n)}
             aria-pressed={value === n}
-            className={`rounded-full border px-4 py-2 text-base transition-colors ${value === n ? "border-ink bg-ink text-paper" : "border-ink/25 text-ink hover:border-ink"}`}
+            className={`rounded-full border px-4 py-2 text-base transition-colors ${value === n ? "border-cobalt bg-cobalt text-paper" : "border-ink/25 text-ink hover:border-ink"}`}
           >
             {format(n)}
           </button>

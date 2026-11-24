@@ -199,21 +199,31 @@ const ICONS: Record<PopularFeatureId, ReactNode> = {
   ),
 };
 
-/** Side-scrolling row of feature tiles: a pictogram on a pale grey tile with the feature name beneath. */
+/** The tiles take turns in the two brand colours: a soft tint washing into a slightly stronger one, with the
+ *  pictogram drawn in that colour's deep shade. */
+const TILE_TONES = [
+  { tile: "bg-linear-135 from-cobalt-soft/45 to-cobalt-soft", icon: "text-cobalt-deep" },
+  { tile: "bg-linear-135 from-accent-soft/45 to-accent-soft", icon: "text-accent-deep" },
+] as const;
+
+/** Side-scrolling row of feature tiles: a pictogram on a colour-washed tile with the feature name beneath. */
 export function PopularFeatures({ features }: { features: PopularFeature[] }) {
   if (!features.length) return null;
   return (
     <ul className="-mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
-      {features.map((f) => (
-        <li key={f.id} className="w-44 shrink-0 snap-start sm:w-52">
-          <div className="flex aspect-4/3 items-center justify-center rounded-2xl bg-ink/5">
-            <svg aria-hidden viewBox="0 0 32 32" className="h-16 w-16 text-ink sm:h-[4.5rem] sm:w-[4.5rem]" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
-              {ICONS[f.id]}
-            </svg>
-          </div>
-          <p className="mt-3 text-lg font-semibold leading-snug tracking-tight">{f.label}</p>
-        </li>
-      ))}
+      {features.map((f, i) => {
+        const tone = TILE_TONES[i % TILE_TONES.length];
+        return (
+          <li key={f.id} className="w-44 shrink-0 snap-start sm:w-52">
+            <div className={`flex aspect-4/3 items-center justify-center rounded-2xl ${tone.tile}`}>
+              <svg aria-hidden viewBox="0 0 32 32" className={`h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] ${tone.icon}`} fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                {ICONS[f.id]}
+              </svg>
+            </div>
+            <p className="mt-3 text-lg font-semibold leading-snug tracking-tight">{f.label}</p>
+          </li>
+        );
+      })}
     </ul>
   );
 }

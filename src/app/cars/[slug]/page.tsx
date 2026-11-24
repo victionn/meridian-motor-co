@@ -107,7 +107,7 @@ async function VehicleDetail({ params }: Pick<PageProps<"/cars/[slug]">, "params
 
           <div className="mt-7 overflow-hidden rounded-2xl text-[0.85rem] font-medium uppercase tracking-[0.16em] xl:text-base xl:[&_a]:py-5 xl:[&_button]:py-5">
             {sold ? (
-              <Link href="/cars" className="flex items-center justify-center bg-ink py-4 text-paper transition-colors hover:bg-ink/85">
+              <Link href="/cars" className="flex items-center justify-center cta-cobalt py-4">
                 Browse the showroom
               </Link>
             ) : (
@@ -117,7 +117,7 @@ async function VehicleDetail({ params }: Pick<PageProps<"/cars/[slug]">, "params
                 </a>
                 <div className="mt-px grid grid-cols-2 gap-px">
                   <ShareButton title={title} className="flex items-center justify-center gap-3 bg-ink/8 py-4 uppercase tracking-[0.16em] transition-colors hover:bg-ink/15" />
-                  <a href={enquire} className="flex items-center justify-center gap-4 bg-ink py-4 text-paper transition-colors hover:bg-ink/85">
+                  <a href={enquire} className="flex items-center justify-center gap-4 cta-accent py-4">
                     Enquire <span aria-hidden>→</span>
                   </a>
                 </div>

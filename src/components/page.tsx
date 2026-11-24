@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { site } from "@/content/site";
+import { BadgeIcon, BadgeNumber, type BadgeIconName } from "./badge-icons";
+import { HeroLight, type HeroLightProps } from "./hero-light";
 import { HeroLoop } from "./hero-loop";
 
 /**
@@ -31,6 +33,7 @@ export function PageHero({
   imageAlt = "",
   imagePosition,
   video,
+  light,
   children,
 }: {
   title: string;
@@ -42,6 +45,8 @@ export function PageHero({
   imagePosition?: string;
   /** Optional looping clip played over the photo (the photo should be the clip's first frame). */
   video?: { src: string; type: string; media?: string }[];
+  /** Optional living light drawn over the photo (sun, rays, motes, glints), with a slow push-in. */
+  light?: HeroLightProps;
   children?: ReactNode;
 }) {
   if (!image) {
@@ -60,11 +65,16 @@ export function PageHero({
   return (
     <section className="relative isolate overflow-hidden bg-ink text-paper">
       <div className="relative aspect-4/3 sm:aspect-16/9 md:aspect-auto md:h-[min(72svh,46rem)] md:min-h-[30rem]">
-        <Image src={image} alt={imageAlt} fill priority sizes="100vw" className="object-cover" style={imagePosition ? { objectPosition: imagePosition } : undefined} />
-        {video && <HeroLoop sources={video} position={imagePosition} />}
-        {/* Shade the lower left, where the title sits, and the top under the header. */}
-        <div className="absolute inset-0 bg-linear-to-t from-ink/85 via-ink/25 to-ink/30" />
-        <div className="absolute inset-0 hidden bg-linear-to-r from-ink/60 via-ink/15 to-transparent md:block" />
+        {/* Photo, clip, shading and light move together, so the light stays pinned to the photo during the push-in. */}
+        <div className={`absolute inset-0 ${light ? "hl-push" : ""}`}>
+          <Image src={image} alt={imageAlt} fill priority sizes="100vw" className="object-cover" style={imagePosition ? { objectPosition: imagePosition } : undefined} />
+          {video && <HeroLoop sources={video} position={imagePosition} />}
+          {/* Shade the lower left, where the title sits, and the top under the header. */}
+          <div className="absolute inset-0 bg-linear-to-t from-ink/85 via-ink/25 to-ink/30" />
+          <div className="absolute inset-0 hidden bg-linear-to-r from-ink/60 via-ink/15 to-transparent md:block" />
+          {/* The light goes over the shading, as a real flare sits on the lens rather than in the scene. */}
+          {light && <HeroLight {...light} />}
+        </div>
       </div>
       <div className="edge-x relative pb-10 pt-6 md:absolute md:inset-x-0 md:bottom-0 md:pb-14 md:[text-shadow:0_2px_24px_rgba(0,0,0,0.45)]">
         {eyebrow && <Eyebrow light>{eyebrow}</Eyebrow>}
@@ -79,7 +89,7 @@ export function PageHero({
 export function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
   return (
     <p className={`flex items-center gap-4 text-[0.72rem] font-medium uppercase tracking-[0.3em] ${light ? "text-paper/75" : "text-ink/55"}`}>
-      <span aria-hidden className={`h-px w-10 ${light ? "bg-accent" : "bg-accent-deep"}`} />
+      <span aria-hidden className="h-px w-10 bg-linear-to-r from-cobalt to-accent" />
       {children}
     </p>
   );
@@ -125,12 +135,12 @@ export function ButtonLink({
   external?: boolean;
 }) {
   const styles = {
-    "primary-dark": "bg-ink text-paper hover:bg-ink/85",
-    "secondary-dark": "border border-ink/30 text-ink hover:border-ink",
-    "primary-light": "bg-accent text-ink hover:bg-accent-strong",
-    "secondary-light": "border border-paper/50 text-paper hover:border-paper",
+    "primary-dark": "cta-cobalt",
+    "secondary-dark": "border border-cobalt/40 text-cobalt-deep transition-colors hover:border-cobalt hover:bg-cobalt/5",
+    "primary-light": "cta-accent",
+    "secondary-light": "border border-paper/50 text-paper transition-colors hover:border-paper",
   }[`${variant}-${tone}`];
-  const className = `inline-flex items-center justify-center gap-3 rounded-full px-7 py-4 text-[0.8rem] font-medium uppercase tracking-[0.16em] transition-colors ${styles}`;
+  const className = `inline-flex items-center justify-center gap-3 rounded-full px-7 py-4 text-[0.8rem] font-medium uppercase tracking-[0.16em] ${styles}`;
   const content = (
     <>
       {children} <span aria-hidden>→</span>
@@ -151,33 +161,50 @@ export function ButtonLink({
 }
 
 /**
- * A row of short points (title + sentence), separated by fine rules: the site's stand-in for the icon "feature
- * boxes" on the old pages. Numbered when `numbered` is set (for step-by-step processes).
+ * A row of short points (title + sentence): the site's stand-in for the icon "feature boxes" on the old pages. Each
+ * point can carry an illustrated badge (`icon`); `numbered` gives step-by-step points a numbered badge instead.
+ * Points without a badge are separated by fine rules. `dark` for a midnight band.
  */
-export function Points({ items, numbered = false, columns = 3 }: { items: { title: string; body: ReactNode }[]; numbered?: boolean; columns?: 2 | 3 | 4 }) {
+export function Points({
+  items,
+  numbered = false,
+  columns = 3,
+  dark = false,
+}: {
+  items: { title: string; body: ReactNode; icon?: BadgeIconName }[];
+  numbered?: boolean;
+  columns?: 2 | 3 | 4;
+  dark?: boolean;
+}) {
   const grid = { 2: "md:grid-cols-2", 3: "md:grid-cols-2 lg:grid-cols-3", 4: "md:grid-cols-2 xl:grid-cols-4" }[columns];
   return (
-    <ol className={`grid gap-x-10 gap-y-10 ${grid}`}>
-      {items.map((item, i) => (
-        <li key={item.title} className="border-t border-ink/20 pt-6">
-          {numbered && <p className="font-classic text-5xl leading-none text-ink/25">{String(i + 1).padStart(2, "0")}</p>}
-          <h3 className={`text-2xl font-semibold tracking-tight ${numbered ? "mt-5" : ""}`}>{item.title}</h3>
-          <div className="mt-3 text-lg leading-relaxed text-ink/70">{item.body}</div>
+    <ol className={`grid gap-x-10 gap-y-12 ${grid}`}>
+      {items.map((item, i) => {
+        // Rotate the badge colourways, shifting one per row so a badge never matches its neighbour or the one above.
+        const tone = i + Math.floor(i / columns);
+        return (
+        <li key={item.title} className={numbered || item.icon ? "" : `border-t pt-6 ${dark ? "border-paper/20" : "border-ink/20"}`}>
+          {numbered ? <BadgeNumber n={i + 1} tone={tone} /> : item.icon && <BadgeIcon name={item.icon} tone={tone} />}
+          <h3 className={`text-2xl font-semibold tracking-tight ${numbered || item.icon ? "mt-6" : ""}`}>{item.title}</h3>
+          <div className={`mt-3 text-lg leading-relaxed ${dark ? "text-paper/70" : "text-ink/70"}`}>{item.body}</div>
         </li>
-      ))}
+        );
+      })}
     </ol>
   );
 }
 
-/** A tick list in the site's style. */
+/** A tick list in the site's style: white ticks in small cobalt discs. */
 export function TickList({ items, className = "" }: { items: ReactNode[]; className?: string }) {
   return (
     <ul className={`space-y-3 ${className}`}>
       {items.map((item, i) => (
         <li key={i} className="flex gap-3 text-lg leading-snug">
-          <svg aria-hidden viewBox="0 0 16 16" className="mt-1 h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M3 8.5l3.2 3.2L13 5" />
-          </svg>
+          <span aria-hidden className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-linear-to-br from-cobalt to-cobalt-deep">
+            <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 8.5l3.2 3.2L13 5" />
+            </svg>
+          </span>
           <span>{item}</span>
         </li>
       ))}
@@ -185,21 +212,28 @@ export function TickList({ items, className = "" }: { items: ReactNode[]; classN
   );
 }
 
-/** "Meridian Motor Co Certified": the three promises every car carries (the block that closes most pages on the old site). */
+/**
+ * "Meridian Motor Co Certified": the three promises every car carries (the block that closes most pages on the old
+ * site). A full-width midnight band that runs straight into the footer: the box-shadow + clip-path pair paints the
+ * band out to the window edges past the page's gutters and max width, and -mb-24 cancels PageBody's bottom padding.
+ */
 export function CertifiedSection() {
   return (
-    <PageSection
-      title="Meridian Motor Co Certified"
-      intro="With a Meridian Motor Co Certified vehicle, you will drive away with ultimate peace of mind."
-    >
-      <Points
-        items={[
-          { title: "Safety and quality inspection", body: "We meticulously evaluate every car against our mechanical checklist to ensure it meets age and mileage expectations." },
-          { title: "Detailing", body: "Our attention to detail makes all the difference. Every car we offer undergoes a comprehensive detailing process to look its very best." },
-          { title: "Manufacturer-style warranty", body: "Meridian Motor Co Certified vehicles come with the choice of manufacturer-style extended warranties, for a trouble-free driving experience." },
-        ]}
-      />
-    </PageSection>
+    <section className="-mb-24 mt-16 bg-midnight pb-20 pt-14 text-paper shadow-[0_0_0_100vmax_var(--color-midnight)] [clip-path:inset(0_-100vmax)] [color-scheme:dark] sm:mt-24 sm:pb-28 sm:pt-20">
+      <Eyebrow light>Our promise</Eyebrow>
+      <h2 className="mt-4 max-w-4xl font-classic text-4xl leading-[1.05] tracking-[-0.015em] sm:text-5xl">Meridian Motor Co Certified</h2>
+      <p className="mt-5 max-w-3xl text-lg leading-relaxed text-paper/75">With a Meridian Motor Co Certified vehicle, you will drive away with ultimate peace of mind.</p>
+      <div className="mt-10 sm:mt-12">
+        <Points
+          dark
+          items={[
+            { icon: "inspection", title: "Safety and quality inspection", body: "We meticulously evaluate every car against our mechanical checklist to ensure it meets age and mileage expectations." },
+            { icon: "sparkle", title: "Detailing", body: "Our attention to detail makes all the difference. Every car we offer undergoes a comprehensive detailing process to look its very best." },
+            { icon: "shield", title: "Manufacturer-style warranty", body: "Meridian Motor Co Certified vehicles come with the choice of manufacturer-style extended warranties, for a trouble-free driving experience." },
+          ]}
+        />
+      </div>
+    </section>
   );
 }
 
@@ -223,19 +257,19 @@ export function ContactDetails({ garage = false }: { garage?: boolean }) {
           <h3 className="text-2xl font-semibold tracking-tight">{b.name}</h3>
           <dl className="mt-6 grid gap-x-10 gap-y-6 text-lg sm:grid-cols-2">
             <div>
-              <dt className="text-sm uppercase tracking-[0.14em] text-ink/55">Phone</dt>
+              <dt className="text-sm font-medium uppercase tracking-[0.14em] text-cobalt">Phone</dt>
               <dd className="mt-1">
                 <a href={b.phone.href} className="underline-offset-4 hover:underline">{b.phone.display}</a>
               </dd>
             </div>
             <div>
-              <dt className="text-sm uppercase tracking-[0.14em] text-ink/55">Email</dt>
+              <dt className="text-sm font-medium uppercase tracking-[0.14em] text-cobalt">Email</dt>
               <dd className="mt-1 break-words">
                 <a href={`mailto:${b.email}`} className="underline-offset-4 hover:underline">{b.email}</a>
               </dd>
             </div>
             <div>
-              <dt className="text-sm uppercase tracking-[0.14em] text-ink/55">Address</dt>
+              <dt className="text-sm font-medium uppercase tracking-[0.14em] text-cobalt">Address</dt>
               <dd className="mt-1">
                 {address}
                 <br />
@@ -245,7 +279,7 @@ export function ContactDetails({ garage = false }: { garage?: boolean }) {
               </dd>
             </div>
             <div>
-              <dt className="text-sm uppercase tracking-[0.14em] text-ink/55">{b.label}</dt>
+              <dt className="text-sm font-medium uppercase tracking-[0.14em] text-cobalt">{b.label}</dt>
               <dd className="mt-1">
                 {b.hours.map((h) => (
                   <span key={h.days} className="block">

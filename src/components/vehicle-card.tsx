@@ -54,7 +54,7 @@ export function VehicleCard({ vehicle: v, priority = false }: { vehicle: Vehicle
         <a
           href={enquire}
           aria-label={`Enquire about ${title}`}
-          className="flex items-center justify-center gap-4 bg-ink py-6 text-paper transition-colors hover:bg-ink/85"
+          className="flex items-center justify-center gap-4 cta-accent py-6"
         >
           Enquire <Arrow />
         </a>
@@ -109,10 +109,10 @@ export function FeaturedVehicle({ vehicle: v }: { vehicle: Vehicle }) {
         <div className="mt-auto flex flex-wrap items-center justify-between gap-x-8 gap-y-4 pt-7">
           <p className="text-3xl font-bold tracking-tight">{formatPrice(v.price)}</p>
           <div className="flex gap-3 text-[0.8rem] font-medium uppercase tracking-[0.16em]">
-            <Link href={`/cars/${v.slug}`} aria-label={`View ${title}`} className="flex items-center gap-4 rounded-full border border-ink/30 px-6 py-3.5 transition-colors hover:border-ink">
+            <Link href={`/cars/${v.slug}`} aria-label={`View ${title}`} className="flex items-center gap-4 rounded-full border border-cobalt/40 px-6 py-3.5 text-cobalt-deep transition-colors hover:border-cobalt hover:bg-cobalt/5">
               View <Arrow />
             </Link>
-            <a href={enquire} aria-label={`Enquire about ${title}`} className="flex items-center gap-4 rounded-full bg-ink px-6 py-3.5 text-paper transition-colors hover:bg-ink/85">
+            <a href={enquire} aria-label={`Enquire about ${title}`} className="flex items-center gap-4 rounded-full cta-accent px-6 py-3.5">
               Enquire <Arrow />
             </a>
           </div>

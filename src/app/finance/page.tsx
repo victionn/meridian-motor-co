@@ -49,9 +49,9 @@ export default function FinancePage() {
         <PageSection first title="Finance, made straightforward">
           <Points
             items={[
-              { title: "14+ lenders", body: "We secure the best deal by comparing products from Australia's leading lenders." },
-              { title: "Expert advisors", body: "An experienced, straightforward and honest approach to vehicle finance." },
-              { title: "Fast settlement", body: "An automated application process means we can approve and settle on the same day." },
+              { icon: "bank", title: "14+ lenders", body: "We secure the best deal by comparing products from Australia's leading lenders." },
+              { icon: "advisor", title: "Expert advisors", body: "An experienced, straightforward and honest approach to vehicle finance." },
+              { icon: "bolt", title: "Fast settlement", body: "An automated application process means we can approve and settle on the same day." },
             ]}
           />
         </PageSection>
@@ -77,9 +77,11 @@ export default function FinancePage() {
               <details key={f.q} className="group py-6">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-xl font-semibold tracking-tight [&::-webkit-details-marker]:hidden">
                   {f.q}
-                  <svg aria-hidden viewBox="0 0 16 16" className="h-5 w-5 shrink-0 transition-transform group-open:rotate-45" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                    <path d="M8 2v12M2 8h12" />
-                  </svg>
+                  <span aria-hidden className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-cobalt/10 text-cobalt transition-colors group-open:bg-accent group-open:text-ink">
+                    <svg viewBox="0 0 16 16" className="h-4 w-4 transition-transform group-open:rotate-45" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                      <path d="M8 2v12M2 8h12" />
+                    </svg>
+                  </span>
                 </summary>
                 <p className="mt-4 max-w-3xl text-lg leading-relaxed text-ink/70">{f.a}</p>
               </details>

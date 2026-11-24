@@ -99,7 +99,7 @@ export function LeadForm({
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-ink px-7 py-4 text-[0.8rem] font-medium uppercase tracking-[0.16em] text-paper transition-colors hover:bg-ink/85 disabled:opacity-60 sm:w-auto"
+        className="inline-flex w-full items-center justify-center gap-3 rounded-full cta-accent px-7 py-4 text-[0.8rem] font-medium uppercase tracking-[0.16em] disabled:opacity-60 sm:w-auto"
       >
         {pending ? "Sending…" : submitLabel} <span aria-hidden>→</span>
       </button>

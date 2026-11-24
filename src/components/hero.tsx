@@ -84,7 +84,7 @@ export function Hero() {
             placeholder="What car are you looking for?"
             className="min-w-0 flex-1 bg-transparent pl-5 pr-2 text-lg text-paper md:pl-8 md:text-xl lg:text-[1.75rem] placeholder:text-paper/85 focus:outline-none"
           />
-          <button aria-label="Search" className="flex h-full shrink-0 items-center gap-2.5 rounded-full bg-paper px-4 text-xs sm:px-5 md:gap-4 md:px-9 md:text-lg font-medium uppercase tracking-[0.16em] text-ink transition-colors hover:bg-accent">
+          <button aria-label="Search" className="flex h-full shrink-0 items-center gap-2.5 rounded-full cta-cobalt px-4 text-xs sm:px-5 md:gap-4 md:px-9 md:text-lg font-medium uppercase tracking-[0.16em]">
             {/* Phones show just the arrow, so the whole prompt fits in the field. */}
             <span className="max-sm:hidden">Search</span>
             <svg aria-hidden viewBox="0 0 16 16" className="h-3.5 w-3.5 md:h-5 md:w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">

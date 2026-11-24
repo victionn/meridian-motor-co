@@ -45,6 +45,14 @@ export default function ServicePage() {
         image="/pages/service.jpg"
         imageAlt="A silver Porsche 911 Turbo S Cabriolet at sunset with a Meridian number plate"
         imagePosition="70% 60%"
+        light={{
+          // Measured on the 2400 × 1150 photo: the setting sun, its streak on the road, and the full-width taillight.
+          ratio: 2400 / 1150,
+          position: [70, 60],
+          sun: [26, 29.1],
+          glint: { at: [27, 62], size: [7, 16] },
+          taillight: { from: [65.6, 51.2], to: [95.8, 49.65], thickness: 0.9 },
+        }}
       >
         <ButtonLink href={site.service.bookingUrl} tone="light">Book a service</ButtonLink>
         <ButtonLink href="#service-plans" tone="light" variant="secondary">View service plans</ButtonLink>
@@ -59,8 +67,13 @@ export default function ServicePage() {
         >
           <div className="grid gap-6 lg:grid-cols-3">
             {PLANS.map((plan, i) => (
-              <article key={plan.name} className={`flex flex-col rounded-2xl p-8 sm:p-10 ${i === PLANS.length - 1 ? "bg-ink text-paper" : "bg-ink/5"}`}>
-                <h3 className="text-sm font-medium uppercase tracking-[0.18em] opacity-70">{plan.name}</h3>
+              <article
+                key={plan.name}
+                className={`relative flex flex-col overflow-hidden rounded-2xl p-8 sm:p-10 ${i === PLANS.length - 1 ? "bg-midnight text-paper" : "bg-cobalt/6"}`}
+              >
+                {/* A cobalt-to-tangerine strip along the top of each card. */}
+                <span aria-hidden className="absolute inset-x-0 top-0 h-1.5 bg-linear-to-r from-cobalt to-accent" />
+                <h3 className={`text-sm font-semibold uppercase tracking-[0.18em] ${i === PLANS.length - 1 ? "text-accent" : "text-cobalt"}`}>{plan.name}</h3>
                 <p className="mt-4 font-classic text-6xl leading-none">
                   {money(plan.price)}
                   <span className="ml-2 font-sans text-lg opacity-60">/year</span>
@@ -82,7 +95,7 @@ export default function ServicePage() {
               {WARRANTY.map((w) => (
                 <div key={w.term} className="flex items-baseline justify-between gap-6 py-5">
                   <dt className="text-xl">Essential Warranty, {w.term}</dt>
-                  <dd className="text-xl font-semibold">from {money(w.from)}*</dd>
+                  <dd className="text-xl font-semibold text-cobalt">from {money(w.from)}*</dd>
                 </div>
               ))}
             </dl>
@@ -98,14 +111,14 @@ export default function ServicePage() {
           <Points
             columns={4}
             items={[
-              { title: "Log book service", body: "Serviced to manufacturer requirements, to maintain your factory warranty." },
-              { title: "Electrical diagnostics", body: "The latest equipment pinpoints faults and gets you back on the road quickly." },
-              { title: "Mechanical repairs", body: "Whatever the fault, we get your car back to perfect working order fast." },
-              { title: "Air conditioning", body: "We pinpoint and repair air-conditioning leaks accurately." },
-              { title: "Brakes", body: "Pads, discs and sensors for luxury and performance cars." },
-              { title: "Transmission", body: "Repairs for every gearbox type: automatic, single clutch or dual clutch." },
-              { title: "Tyres", body: "Tyre replacement, wheel balancing and alignment while you wait." },
-              { title: "Wheel refurbishment", body: "Scratched wheels refurbished to their original finish." },
+              { icon: "logbook", title: "Log book service", body: "Serviced to manufacturer requirements, to maintain your factory warranty." },
+              { icon: "battery", title: "Electrical diagnostics", body: "The latest equipment pinpoints faults and gets you back on the road quickly." },
+              { icon: "cog", title: "Mechanical repairs", body: "Whatever the fault, we get your car back to perfect working order fast." },
+              { icon: "snowflake", title: "Air conditioning", body: "We pinpoint and repair air-conditioning leaks accurately." },
+              { icon: "brake", title: "Brakes", body: "Pads, discs and sensors for luxury and performance cars." },
+              { icon: "gearbox", title: "Transmission", body: "Repairs for every gearbox type: automatic, single clutch or dual clutch." },
+              { icon: "tyre", title: "Tyres", body: "Tyre replacement, wheel balancing and alignment while you wait." },
+              { icon: "wheel", title: "Wheel refurbishment", body: "Scratched wheels refurbished to their original finish." },
             ]}
           />
           <div className="mt-12 flex flex-wrap gap-3">
@@ -121,10 +134,10 @@ export default function ServicePage() {
           <Points
             columns={4}
             items={[
-              { title: "Passionate technicians", body: "Our technicians are just as passionate about luxury cars as you are." },
-              { title: "State-of-the-art facility", body: "Investment in the latest equipment means we service the latest models." },
-              { title: "Same-day service", body: "Drop your car off before 9am and pick it up fully serviced by 5pm." },
-              { title: "Since 2011", body: "More than ten years' experience looking after Sydney's luxury cars." },
+              { icon: "heart", title: "Passionate technicians", body: "Our technicians are just as passionate about luxury cars as you are." },
+              { icon: "garage", title: "State-of-the-art facility", body: "Investment in the latest equipment means we service the latest models." },
+              { icon: "clock", title: "Same-day service", body: "Drop your car off before 9am and pick it up fully serviced by 5pm." },
+              { icon: "calendar", title: "Since 2011", body: "More than ten years' experience looking after Sydney's luxury cars." },
             ]}
           />
           <div className="mt-16 grid gap-10 md:grid-cols-2">

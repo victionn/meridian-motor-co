@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: { siteName: site.name, type: "website", locale: "en_AU" },
 };
 
-export const viewport: Viewport = { themeColor: "#0b0b0c" };
+export const viewport: Viewport = { themeColor: "#08080f" };
 
 const dealerJsonLd = {
   "@context": "https://schema.org",

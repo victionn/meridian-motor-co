@@ -72,7 +72,7 @@ export function SiteHeader() {
         floating ? "border-transparent bg-transparent" : "border-white/10 bg-ink/70 backdrop-blur-xl backdrop-saturate-150"
       } ${hidden && !panel ? "-translate-y-full" : "translate-y-0"}`}
     >
-      <div className={`edge-x grid grid-cols-[1fr_auto_1fr] items-center gap-4 transition-[height] duration-300 ${floating ? "h-16" : "h-20 md:h-24"}`}>
+      <div className={`edge-x grid grid-cols-[1fr_auto_1fr] items-center gap-4 transition-[height] lg:gap-6 xl:gap-10 duration-300 ${floating ? "h-16" : "h-20 md:h-24"}`}>
         {/* Phones: a menu button that opens the full-screen panel below. */}
         <button
           type="button"
@@ -89,8 +89,9 @@ export function SiteHeader() {
           </span>
         </button>
 
-        {/* Laptops and up: the page links sit in the bar itself, split either side of the logo (from site.nav). */}
-        <nav aria-label="Main" className="-ml-2 hidden items-center gap-1 justify-self-start lg:flex xl:gap-3">
+        {/* Laptops and up: the page links sit in the bar itself, split either side of the logo and drawn in
+            close to it (from site.nav); only the search button stays out at the right edge. */}
+        <nav aria-label="Main" className="hidden items-center gap-1 justify-self-end lg:flex xl:gap-3">
           {leftNav.map((item) => (
             <NavLink key={item.href} item={item} current={isCurrent(item.href)} />
           ))}
@@ -106,7 +107,7 @@ export function SiteHeader() {
           />
         </Link>
 
-        <div className="-mr-2 flex items-center gap-1 justify-self-end xl:gap-3">
+        <div className="-mr-2 flex items-center justify-end gap-1 justify-self-stretch lg:justify-between xl:gap-3">
           <nav aria-label="More" className="hidden items-center gap-1 lg:flex xl:gap-3">
             {rightNav.map((item) => (
               <NavLink key={item.href} item={item} current={isCurrent(item.href)} />
@@ -145,7 +146,7 @@ export function SiteHeader() {
               placeholder="Search make or model"
               className="flex-1 bg-transparent font-display text-2xl placeholder:text-muted focus:outline-none sm:text-3xl"
             />
-            <button className="btn-primary px-5! py-2.5!">Search</button>
+            <button className="btn-cobalt px-5! py-2.5!">Search</button>
           </form>
         </div>
       )}

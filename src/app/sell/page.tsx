@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LeadForm } from "@/components/lead-form";
 import { ButtonLink, CertifiedSection, PageBody, PageHero, PageSection, Points, TickList } from "@/components/page";
+import { TextReveal } from "@/components/text-reveal";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 
 export default function SellPage() {
   return (
-    <>
+    // Text loads in as you scroll.
+    <TextReveal>
       <PageHero
         eyebrow="Sell or trade in"
         title="We pay more for luxury cars"
@@ -20,7 +22,7 @@ export default function SellPage() {
         // The still is the clip's first frame, so the hand-over from photo to motion is invisible.
         image="/pages/sell-hero-poster.jpg"
         imageAlt="A black Mercedes-AMG GT on a racetrack with a Meridian number plate"
-        imagePosition="65% 60%"
+        imagePosition="65% 75%"
         video={[
           { src: "/pages/sell-hero-mobile.mp4", type: "video/mp4", media: "(max-width: 767px)" },
           { src: "/pages/sell-hero-desktop.webm", type: "video/webm" },
@@ -89,6 +91,6 @@ export default function SellPage() {
 
         <CertifiedSection />
       </PageBody>
-    </>
+    </TextReveal>
   );
 }

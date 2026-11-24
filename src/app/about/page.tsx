@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ButtonLink, CertifiedSection, ContactDetails, PageBody, PageHero, PageSection } from "@/components/page";
+import { ButtonLink, CertifiedSection, ContactDetails, PageBody, PageHero, PageSection, Points } from "@/components/page";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -40,6 +40,18 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        <PageSection title="Why Meridian Motor Co">
+          <Points
+            columns={4}
+            items={[
+              { icon: "gem", title: "Rare and exclusive", body: "A curated range of rare European, luxury and sports cars you won't find anywhere else." },
+              { icon: "medal", title: "Half a century of experience", body: "A team that brings over 50 years of combined experience to every car we sell." },
+              { icon: "shield", title: "Certified cars", body: "Every car is inspected and detailed, with extended warranty options available." },
+              { icon: "pin", title: "Lane Cove West showroom", body: "Visit the showroom to see the collection in person, seven days a week." },
+            ]}
+          />
+        </PageSection>
 
         <PageSection
           title="Careers at Meridian Motor Co"

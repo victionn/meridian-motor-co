@@ -66,7 +66,7 @@ async function Inventory({ searchParams }: Pick<PageProps<"/cars">, "searchParam
           {toParamEntries({ ...query, q: undefined, page: undefined }).map(([name, value]) => (
             <input key={`${name}:${value}`} type="hidden" name={name} value={value} />
           ))}
-          <button className="rounded-xl bg-ink px-6 py-3 text-xs font-medium uppercase tracking-[0.16em] text-paper transition-colors hover:bg-ink/85">
+          <button className="rounded-xl cta-cobalt px-6 py-3 text-xs font-medium uppercase tracking-[0.16em]">
             Search
           </button>
         </form>
@@ -123,7 +123,7 @@ function Pagination({ query, page, pageCount }: { query: InventoryQuery; page: n
           key={p}
           href={`/cars${toSearchString(query, { page: p })}`}
           aria-current={p === page ? "page" : undefined}
-          className={`flex h-11 w-11 items-center justify-center rounded-lg font-medium ${p === page ? "bg-ink text-paper" : "text-ink/70 hover:bg-ink/10"}`}
+          className={`flex h-11 w-11 items-center justify-center rounded-lg font-medium ${p === page ? "bg-cobalt text-paper" : "text-ink/70 hover:bg-ink/10"}`}
         >
           {p}
         </Link>

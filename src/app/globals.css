@@ -2,16 +2,26 @@
 
 /* Brand tokens — swap here to re-skin the whole site. */
 @theme {
-  --color-ink: #0b0b0c;
-  --color-panel: #141416;
-  --color-line: #26262a;
-  --color-muted: #9a9aa2;
+  /* Midnight black: a black with a faint blue cast. */
+  --color-ink: #08080f;
+  --color-panel: #11111b;
+  --color-line: #23232f;
+  --color-muted: #9a9aab;
+  /* Midnight blue: the brand's showcase surface (the footer, the Certified band). */
+  --color-midnight: #0d1838;
   --color-paper: #ffffff;
-  /* Meridian Gold: the sun at its meridian. Bright signal yellow for calls to action and highlights (use sparingly),
-     a deep bronze for quiet details and for anything that sits on the white pages, where the yellow is too faint. */
-  --color-accent: #fbbc04;
-  --color-accent-strong: #ffd34d;
-  --color-accent-deep: #8a6a0a;
+  /* Two button colours: tangerine for the one main "act now" action on a page — enquire, get a valuation, view the
+     showroom — and electric cobalt for everyday actions (search, browse, the buttons on the white pages). Each is a
+     light-to-deep pair, drawn as a gradient by the cta-* utilities below. Tangerine takes midnight text (white on
+     orange is too faint to read); cobalt takes white. */
+  --color-accent: #ff9a1f;
+  --color-accent-strong: #ffb44d;
+  --color-accent-deep: #ff5f15;
+  --color-cobalt: #3563ff;
+  --color-cobalt-deep: #1a37c9;
+  /* Soft tints of each, for the offset shadows on the illustrated badges. */
+  --color-accent-soft: #ffd2a6;
+  --color-cobalt-soft: #c6d3ff;
 
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
@@ -32,16 +42,23 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-accent;
   }
-  /* Yellow barely shows against white, so focus rings on the light pages use the deep bronze instead. */
+  /* On the white pages focus rings are cobalt, the everyday colour there… */
   .bg-paper :focus-visible {
-    @apply outline-accent-deep;
+    @apply outline-cobalt;
+  }
+  /* …but a midnight band inside a white page goes back to tangerine. */
+  .bg-midnight :focus-visible {
+    @apply outline-accent;
+  }
+  ::selection {
+    @apply bg-accent text-ink;
   }
 }
 
 @utility container-x {
   @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
 }
-/* Featured-card border: a graphite edge with a band of yellow light that travels slowly around it. */
+/* Featured-card border: a midnight edge with a band of cobalt-to-tangerine light that travels slowly around it. */
 @property --feature-angle {
   syntax: "<angle>";
   inherits: false;
@@ -56,16 +73,17 @@
   padding: 4.5px;
   background: conic-gradient(
     from var(--feature-angle),
-    #1c1c1f 0deg,
-    #1c1c1f 190deg,
-    var(--color-accent-deep) 245deg,
-    var(--color-accent) 285deg,
-    var(--color-accent-deep) 325deg,
-    #1c1c1f 360deg
+    #1a1a26 0deg,
+    #1a1a26 190deg,
+    var(--color-cobalt-deep) 235deg,
+    var(--color-cobalt) 265deg,
+    var(--color-accent) 300deg,
+    #1a1a26 340deg,
+    #1a1a26 360deg
   );
   box-shadow:
-    0 0 0 1px rgb(11 11 12 / 0.06),
-    0 30px 70px -32px rgb(11 11 12 / 0.6);
+    0 0 0 1px rgb(8 8 15 / 0.06),
+    0 30px 70px -32px rgb(8 8 15 / 0.6);
   animation: feature-sweep 8s linear infinite;
   @media (prefers-reduced-motion: reduce) {
     animation: none;
@@ -79,8 +97,32 @@
 @utility btn {
   @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-colors disabled:opacity-50;
 }
+/* Button fills: a light-to-deep gradient that brightens and glows on hover. */
+@utility cta-accent {
+  color: var(--color-ink);
+  background-image: linear-gradient(105deg, var(--color-accent), var(--color-accent-deep));
+  transition-property: filter, box-shadow;
+  transition-duration: 0.25s;
+  &:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 12px 30px -12px var(--color-accent);
+  }
+}
+@utility cta-cobalt {
+  color: var(--color-paper);
+  background-image: linear-gradient(105deg, var(--color-cobalt), var(--color-cobalt-deep));
+  transition-property: filter, box-shadow;
+  transition-duration: 0.25s;
+  &:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 12px 30px -12px var(--color-cobalt);
+  }
+}
 @utility btn-primary {
-  @apply btn bg-accent text-ink hover:bg-accent-strong;
+  @apply btn cta-accent;
+}
+@utility btn-cobalt {
+  @apply btn cta-cobalt;
 }
 @utility btn-ghost {
   @apply btn border border-line text-paper hover:border-accent hover:text-accent;
@@ -96,4 +138,93 @@
 }
 @utility label {
   @apply mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted;
+}
+
+/* Living light over page-header photos (HeroLight). Slow and gentle: it should read as the photo, not an effect. */
+@keyframes hl-sun {
+  0%, 100% { opacity: 0.45; transform: translate(-50%, -50%) scale(0.94); }
+  9% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.08); }
+  17% { opacity: 0.55; }
+  31% { opacity: 1; transform: translate(-50%, -50%) scale(1.12); }
+  44% { opacity: 0.35; transform: translate(-50%, -50%) scale(0.96); }
+  58% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.06); }
+  66% { opacity: 0.6; }
+  81% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+@keyframes hl-rays {
+  0% { opacity: 0.3; transform: translate(-50%, -50%) rotate(-9deg); }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; transform: translate(-50%, -50%) rotate(9deg); }
+}
+@keyframes hl-mote {
+  0% { opacity: 0; transform: translate(0, 0); }
+  25%, 75% { opacity: var(--o); }
+  100% { opacity: 0; transform: translate(var(--dx), -90px); }
+}
+@keyframes hl-glint {
+  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scaleX(0.9); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scaleX(1.12); }
+}
+@keyframes hl-tail {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.75; }
+}
+/* A very slow push-in on the whole photo, light included so it stays pinned. */
+@keyframes hl-push {
+  from { transform: scale(1) translateX(0); }
+  to { transform: scale(1.12) translateX(-2.5%); }
+}
+.hl-sun { transform: translate(-50%, -50%); animation: hl-sun 7s ease-in-out infinite; }
+.hl-rays { transform: translate(-50%, -50%); animation: hl-rays 11s ease-in-out infinite alternate; }
+.hl-mote { opacity: 0; animation: hl-mote 17s linear infinite; }
+.hl-glint { transform: translate(-50%, -50%); animation: hl-glint 4s ease-in-out infinite; }
+.hl-tail { animation: hl-tail 5s ease-in-out infinite; }
+.hl-push { transform-origin: 40% 50%; animation: hl-push 14s ease-in-out infinite alternate; will-change: transform; }
+@media (prefers-reduced-motion: reduce) {
+  .hl-anim, .hl-push { animation: none; }
+  .hl-mote { opacity: 0.3; }
+}
+
+/* Text that loads in as you scroll (components/text-reveal.tsx; keep the selectors in step with TARGETS there).
+   Hidden only with scripting on and no reduced-motion preference; the script adds `in` as each comes into view. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  /* :where() keeps these at zero specificity, so the `.in` rule below always wins. */
+  [data-reveal] :where(p:not(li p, form p, dl p, figure p), li, form, a.rounded-full, :is(h1, h2) + div:not(:has(ul, ol, form))) {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(6px);
+    transition:
+      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--d, 0s);
+  }
+  /* Headings rise out of a mask, top first. */
+  [data-reveal] :where(h1, h2) {
+    /* Only the bottom edge of the mask moves; the others sit well outside so text-shadows aren't clipped. */
+    clip-path: inset(-50% -50% 100% -50%);
+    transform: translateY(0.3em);
+    transition:
+      clip-path 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--d, 0s);
+  }
+  [data-reveal] .in {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    clip-path: inset(-50%);
+  }
+  /* If the script never arrives, show everything after a moment rather than leave it hidden. */
+  [data-reveal]:not([data-ready]) :is(h1, h2, p, li, form, a.rounded-full, :is(h1, h2) + div) {
+    animation: reveal-failsafe 0s 3s forwards;
+  }
+}
+@keyframes reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    clip-path: none;
+  }
 }
