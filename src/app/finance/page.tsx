@@ -37,11 +37,11 @@ export default function FinancePage() {
         eyebrow="Finance"
         title="Tailored solutions"
         intro="Our specialists deliver the best vehicle finance with same-day approvals, tailoring a solution that suits you from Australia's top lenders."
-        // The still is the clip's first frame, so the hand-over from photo to motion is invisible.
-        image="/pages/finance-hero-poster.jpg"
+        // The clip's first frame is this exact photo, so the hand-over from photo to motion is invisible.
+        image="/pages/finance.jpg"
         imageAlt="An Audi RS7 and RS6 parked side by side, both with Meridian number plates"
         imagePosition="60% 70%"
-        // Each car's LEDs switch on in turn (RS6, then RS7), then the clip holds on its last frame.
+        // Only the headlights change: each car's LEDs switch on in turn (RS6, then RS7), then the clip holds on its last frame.
         video={[
           { src: "/pages/finance-hero-mobile.mp4", type: "video/mp4", media: "(max-width: 767px)" },
           { src: "/pages/finance-hero-desktop.webm", type: "video/webm" },
