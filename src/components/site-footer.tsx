@@ -13,7 +13,7 @@ export function SiteFooter() {
     <footer className="bg-midnight text-paper [color-scheme:dark]">
       {/* A fine cobalt-to-tangerine rule along the top edge. */}
       <div aria-hidden className="h-0.5 bg-linear-to-r from-cobalt to-accent" />
-      <div className="edge-x mx-auto max-w-[2400px] pb-10 pt-16 sm:pt-20">
+      <div className="edge-x mx-auto max-w-[2400px] pb-16 pt-16 sm:pb-20 sm:pt-20">
         <div className="grid gap-12 md:grid-cols-2 xl:grid-cols-[1.2fr_1fr_1fr_1fr]">
           <div>
             <Link href="/" aria-label={`${site.name} home`} className="inline-block w-32">
@@ -64,7 +64,11 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-paper/15 pt-8 text-sm text-paper/55">
+      </div>
+
+      {/* The copyright and social bar: a full-width black strip under the midnight footer. */}
+      <div className="bg-ink">
+        <div className="edge-x mx-auto flex max-w-[2400px] flex-wrap items-center justify-between gap-6 py-6 text-sm text-paper/55">
           <p>© <CopyrightYear /> {site.name}</p>
           <div className="flex items-center gap-5">
             <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Meridian Motor Co on Instagram" className={link}>
