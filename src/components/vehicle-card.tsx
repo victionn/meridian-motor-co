@@ -28,18 +28,18 @@ export function VehicleCard({ vehicle: v, priority = false }: { vehicle: Vehicle
         )}
       </Link>
 
-      <div className="flex flex-1 flex-col px-7 pb-8 pt-9 sm:px-10 sm:pt-11">
-        <h3 className="text-[1.75rem] font-bold leading-tight tracking-tight xl:text-[2.1rem]">
+      <div className="flex flex-1 flex-col px-6 pb-5 pt-5 sm:px-7 sm:pt-6">
+        <h3 className="text-[1.4rem] font-bold leading-tight tracking-tight xl:text-[1.6rem]">
           {v.make} <span className="text-ink/50">{v.model}</span>{" "}
-          <span className="align-baseline text-base font-semibold tracking-normal text-ink/35">{v.year}</span>
+          <span className="align-baseline text-sm font-semibold tracking-normal text-ink/35">{v.year}</span>
         </h3>
-        {detail && <p className="mt-2.5 text-base leading-snug text-ink/75 xl:text-[1.05rem]">{detail}</p>}
+        {detail && <p className="mt-1 text-[0.95rem] leading-snug text-ink/75">{detail}</p>}
 
-        <VehicleSpecs vehicle={v} className="mt-8" />
+        <VehicleSpecs vehicle={v} compact className="mt-4" />
 
         {/* mt-auto pins the price row to the bottom so cards in a row line up; pt keeps a gap above the rule. */}
-        <div className="mt-auto pt-8">
-          <p className="border-t border-ink/15 pt-7 text-2xl font-bold tracking-tight">{formatPrice(v.price)}</p>
+        <div className="mt-auto pt-4">
+          <p className="border-t border-ink/15 pt-3.5 text-xl font-bold tracking-tight">{formatPrice(v.price)}</p>
         </div>
       </div>
 
@@ -47,14 +47,14 @@ export function VehicleCard({ vehicle: v, priority = false }: { vehicle: Vehicle
         <Link
           href={`/cars/${v.slug}`}
           aria-label={`View ${title}`}
-          className="flex items-center justify-center gap-4 bg-ink/8 py-6 text-ink transition-colors hover:bg-ink/15"
+          className="flex items-center justify-center gap-4 bg-ink/8 py-4 text-ink transition-colors hover:bg-ink/15"
         >
           View <Arrow />
         </Link>
         <a
           href={enquire}
           aria-label={`Enquire about ${title}`}
-          className="flex items-center justify-center gap-4 cta-accent py-6"
+          className="flex items-center justify-center gap-4 cta-accent py-4"
         >
           Enquire <Arrow />
         </a>
@@ -123,10 +123,10 @@ export function FeaturedVehicle({ vehicle: v }: { vehicle: Vehicle }) {
   );
 }
 
-/** The four headline specs with icons, shared by the showroom card and the car's own page. */
-export function VehicleSpecs({ vehicle: v, className = "" }: { vehicle: Vehicle; className?: string }) {
+/** The four headline specs with icons, shared by the showroom card (`compact`) and the car's own page. */
+export function VehicleSpecs({ vehicle: v, compact = false, className = "" }: { vehicle: Vehicle; compact?: boolean; className?: string }) {
   return (
-    <dl className={`grid grid-cols-2 gap-x-5 gap-y-6 ${className}`}>
+    <dl data-compact={compact || undefined} className={`group/specs grid grid-cols-2 gap-x-5 ${compact ? "gap-y-3" : "gap-y-6"} ${className}`}>
       <Spec label="Kilometres" value={formatOdometer(v)}>
         <circle cx="12" cy="12" r="9" />
         <path d="M12 12l4-5M5.5 15h13" />
@@ -152,10 +152,10 @@ export function VehicleSpecs({ vehicle: v, className = "" }: { vehicle: Vehicle;
 function Spec({ label, value, children }: { label: string; value: string; children: ReactNode }) {
   return (
     <div className="flex items-start gap-3">
-      <svg aria-hidden viewBox="0 0 24 24" className="mt-0.5 h-7 w-7 shrink-0 text-ink/70" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden viewBox="0 0 24 24" className="mt-0.5 h-7 w-7 shrink-0 text-ink/70 group-data-compact/specs:h-5 group-data-compact/specs:w-5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
         {children}
       </svg>
-      <div className="min-w-0 text-[0.85rem] uppercase leading-snug xl:text-[0.95rem]">
+      <div className="min-w-0 text-[0.85rem] uppercase leading-snug xl:text-[0.95rem] group-data-compact/specs:text-[0.75rem] group-data-compact/specs:xl:text-[0.8rem]">
         <dd className="font-bold tracking-wide">{value}</dd>
         <dt className="text-ink/60">{label}</dt>
       </div>
@@ -185,7 +185,7 @@ export function VehicleGridSkeleton({ count = 6 }: { count?: number }) {
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,26rem),1fr))] gap-6 xl:gap-8" aria-hidden>
       {Array.from({ length: count }, (_, i) => (
-        <div key={i} className="h-[40rem] animate-pulse rounded-2xl bg-ink/6" />
+        <div key={i} className="h-[30rem] animate-pulse rounded-2xl bg-ink/6" />
       ))}
     </div>
   );
