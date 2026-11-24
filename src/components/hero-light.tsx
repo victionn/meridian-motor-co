@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
  * Living light over a still page-header photo, drawn in CSS so the photo itself stays pixel-sharp (no video). Kept to
  * what a camera would actually see, so it reads as the photo, not as an effect: the sun flickering faintly as leaves move
  * across it, broad soft shafts of light through the haze, the odd speck of dust catching the light, the reflection on
- * the road shimmering in the heat, and an optional taillight lit steadily.
+ * the road flickering in step with the sun, and an optional taillight lit steadily.
  *
  * Nothing pulses. Each light is a steady base plus faint layers on long, unrelated loop lengths (prime-ish seconds), so
  * the combined light never visibly repeats and has no rhythm, which is what makes a loop read as artificial.
@@ -79,6 +79,7 @@ const fan = (rays: [number, number, number][]) =>
 const RAY_MASK = "radial-gradient(closest-side, #000 4%, rgb(0 0 0 / 0.6) 20%, transparent 50%)";
 
 const GLINT = "radial-gradient(closest-side, rgb(255 190 110 / 0.6), rgb(255 150 70 / 0.16) 60%, transparent)";
+const GLINT_CORE = "radial-gradient(closest-side, rgb(255 205 140 / 0.35), transparent)";
 
 const at = ([x, y]: Pt): CSSProperties => ({ left: `${x}%`, top: `${y}%` });
 
@@ -148,23 +149,17 @@ export function HeroLight({ ratio, position = [50, 50], sun, glint, taillight }:
             }
           />
         ))}
-        {/* The sun's reflection on the road: a steady pool of light, with a band of heat shimmer rising through it. */}
+        {/* The sun's reflection on the road: a steady pool of light, plus a layer that flickers in step with the sun's
+            core (same keyframes and timing), so the reflection dims and brightens with its source as a real one does. */}
         {glint && (
           <>
             <div
-              className="hl-centre absolute rounded-full opacity-75 mix-blend-screen"
+              className="hl-centre absolute rounded-full opacity-70 mix-blend-screen"
               style={{ ...at(glint.at), width: `${glint.size[0]}%`, height: `${glint.size[1]}%`, backgroundImage: GLINT }}
             />
             <div
-              className="hl-anim hl-shimmer absolute rounded-full mix-blend-screen"
-              style={{
-                ...at(glint.at),
-                width: `${glint.size[0] * 1.15}%`,
-                height: `${glint.size[1]}%`,
-                backgroundImage: GLINT,
-                maskImage: "repeating-linear-gradient(to bottom, #000 0 2px, rgb(0 0 0 / 0.15) 4px, #000 7px)",
-                maskSize: "100% 21px",
-              }}
+              className="hl-anim hl-flicker-a absolute rounded-full mix-blend-screen"
+              style={{ ...at(glint.at), width: `${glint.size[0] * 0.7}%`, height: `${glint.size[1] * 0.8}%`, backgroundImage: GLINT_CORE }}
             />
           </>
         )}

@@ -142,7 +142,7 @@
 
 /* Living light over page-header photos (HeroLight). The photo never moves, and nothing pulses: every animated layer
    is faint over a steady base, eased, and on a long loop length that shares no rhythm with the others (7.3, 11.9,
-   17, 23, 29 s), so the light as a whole never visibly repeats. */
+   17, 23, 29 s); only the road reflection shares the sun core's loop, on purpose, since it is that light's reflection, so the light as a whole never visibly repeats. */
 .hl-centre { transform: translate(-50%, -50%); }
 
 /* Sun through moving leaves: small, uneven dips and lifts in brightness, never a swell in size. */
@@ -182,24 +182,11 @@
   25%, 75% { opacity: var(--o); }
   100% { opacity: 0; transform: translate(var(--dx), -90px); }
 }
-/* Heat shimmer on the road: fine bright bands rising slowly through the reflection, wavering a touch sideways. */
-@keyframes hl-shimmer-rise {
-  from { mask-position: 0 0; }
-  to { mask-position: 0 -210px; }
-}
-@keyframes hl-shimmer-sway {
-  0%, 100% { opacity: 0.45; transform: translate(-50%, -50%) skewX(0deg); }
-  27% { opacity: 0.7; transform: translate(-50.6%, -50%) skewX(1.2deg); }
-  52% { opacity: 0.5; transform: translate(-49.6%, -50%) skewX(-0.8deg); }
-  76% { opacity: 0.75; transform: translate(-50.3%, -50%) skewX(0.6deg); }
-}
-
 .hl-flicker-a { transform: translate(-50%, -50%); animation: hl-flicker-a 7.3s ease-in-out infinite; }
 .hl-flicker-b { transform: translate(-50%, -50%); animation: hl-flicker-b 11.9s ease-in-out infinite; }
 .hl-rays-a { transform: translate(-50%, -50%); animation: hl-rays-a 23s ease-in-out infinite alternate; }
 .hl-rays-b { transform: translate(-50%, -50%); animation: hl-rays-b 29s ease-in-out infinite alternate; }
 .hl-mote { opacity: 0; animation: hl-mote 17s linear infinite; }
-.hl-shimmer { transform: translate(-50%, -50%); animation: hl-shimmer-rise 9s linear infinite, hl-shimmer-sway 6.7s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
   .hl-anim { animation: none; }
   .hl-mote { opacity: 0.3; }
