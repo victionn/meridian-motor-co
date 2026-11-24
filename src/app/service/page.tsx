@@ -42,17 +42,15 @@ export default function ServicePage() {
         eyebrow="MeridianMotorCare"
         title="The perfect fit for your new vehicle"
         intro="Service plans, extended warranty and expert servicing at Meridian Garage — total peace of mind that every part, tool and hand that touches your car meets the standard you expect."
-        image="/pages/service.jpg"
-        imageAlt="A silver Porsche 911 Turbo S Cabriolet at sunset with a Meridian number plate"
-        imagePosition="70% 60%"
-        light={{
-          // Measured on the 2400 × 1150 photo: the setting sun, its streak on the road, and the full-width taillight.
-          ratio: 2400 / 1150,
-          position: [70, 60],
-          sun: [26, 29.1],
-          glint: { at: [27, 62], size: [7, 16] },
-          taillight: { from: [65.6, 51.2], to: [95.8, 49.65], thickness: 0.9 },
-        }}
+        // A muted loop of the Meridian Garage film (clean shots only, no title cards), over its own first frame.
+        image="/pages/service-hero-poster.jpg"
+        imageAlt="Technicians at work on cars in the Meridian Garage workshop"
+        imagePosition="50% 55%"
+        video={[
+          { src: "/pages/service-hero-mobile.mp4", type: "video/mp4", media: "(max-width: 767px)" },
+          { src: "/pages/service-hero-desktop.webm", type: "video/webm" },
+          { src: "/pages/service-hero-desktop.mp4", type: "video/mp4" },
+        ]}
       >
         <ButtonLink href={site.service.bookingUrl} tone="light">Book a service</ButtonLink>
         <ButtonLink href="#service-plans" tone="light" variant="secondary">View service plans</ButtonLink>
