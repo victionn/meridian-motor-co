@@ -48,8 +48,9 @@ export default function ServicePage() {
         imagePosition="50% 55%"
         video={[
           { src: "/pages/service-hero-mobile.mp4", type: "video/mp4", media: "(max-width: 767px)" },
-          { src: "/pages/service-hero-desktop.webm", type: "video/webm" },
+          // H.264 first: Safari claims WebM support but can sit on the first frame of a VP9 clip.
           { src: "/pages/service-hero-desktop.mp4", type: "video/mp4" },
+          { src: "/pages/service-hero-desktop.webm", type: "video/webm" },
         ]}
       >
         <ButtonLink href={site.service.bookingUrl} tone="light">Book a service</ButtonLink>
