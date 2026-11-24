@@ -41,7 +41,7 @@ export default function FinancePage() {
         image="/pages/finance-hero-poster.jpg"
         imageAlt="An Audi RS7 and RS6 parked side by side, both with Meridian number plates"
         imagePosition="60% 70%"
-        // The headlights switch on, then the clip holds on its last frame.
+        // The headlights fade up smoothly, then the clip holds on its last frame.
         video={[
           { src: "/pages/finance-hero-mobile.mp4", type: "video/mp4", media: "(max-width: 767px)" },
           { src: "/pages/finance-hero-desktop.webm", type: "video/webm" },
