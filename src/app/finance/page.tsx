@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { FinanceCalculator } from "@/components/finance-calculator";
 import { LeadForm } from "@/components/lead-form";
+import { ScrollSteps } from "@/components/scroll-steps";
 import { ButtonLink, CertifiedSection, PageBody, PageHero, PageSection, Points } from "@/components/page";
 import { site } from "@/content/site";
 
@@ -64,16 +65,14 @@ export default function FinancePage() {
           />
         </PageSection>
 
-        <PageSection title="How it works">
-          <Points
-            numbered
-            items={[
-              { title: "Pre-approval", body: "Choose a quick application over the phone or online." },
-              { title: "Secure your car", body: "Select your car and secure it with a deposit." },
-              { title: "Settle and drive away", body: "Drive away in your new car as soon as finance settles." },
-            ]}
-          />
-        </PageSection>
+        <ScrollSteps
+          title="How it works"
+          steps={[
+            { title: "Pre-approval", body: "Choose a quick application over the phone or online." },
+            { title: "Secure your car", body: "Select your car and secure it with a deposit." },
+            { title: "Settle and drive away", body: "Drive away in your new car as soon as finance settles." },
+          ]}
+        />
 
         <PageSection title="Estimate your repayments" intro="A guide only: quoted repayments do not include lender fees and charges.">
           <FinanceCalculator />

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { CarFinance } from "@/components/car-finance";
+import { PriceWithFinance } from "@/components/car-finance";
 import { PopularFeatures } from "@/components/popular-features";
 import { ReviewRatings } from "@/components/review-ratings";
 import { ShareButton } from "@/components/share-button";
@@ -57,6 +57,11 @@ async function VehicleDetail({ params }: Pick<PageProps<"/cars/[slug]">, "params
   const popular = getPopularFeatures(v);
   const groups = v.featureGroups?.length ? v.featureGroups : v.features.length ? [{ title: "Features", items: v.features }] : [];
 
+  const priceText = "text-[2rem] font-bold tracking-tight xl:text-[2.5rem] 2xl:text-5xl";
+  const reserved = v.status === "reserved" && (
+    <span className="ml-3 rounded-full bg-ink px-3 py-1 align-middle text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-paper">Reserved</span>
+  );
+
   const specs: [string, string | number | undefined][] = [
     ["Kilometres", formatOdometer(v)],
     ["Year", v.year],
@@ -97,12 +102,20 @@ async function VehicleDetail({ params }: Pick<PageProps<"/cars/[slug]">, "params
           </h1>
           {(v.variant || v.engine) && <p className="mt-3 text-lg leading-snug text-ink/75 xl:text-xl 2xl:text-[1.4rem]">{[v.variant, v.body, v.engine].filter(Boolean).join(" · ")}</p>}
 
-          <p className="mt-5 border-b border-ink/15 pb-5 text-[2rem] font-bold tracking-tight xl:text-[2.5rem] 2xl:text-5xl">
-            {sold ? "Sold" : formatPrice(v.price)}
-            {v.status === "reserved" && (
-              <span className="ml-3 rounded-full bg-ink px-3 py-1 align-middle text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-paper">Reserved</span>
-            )}
-          </p>
+          {/* A "Finance" dropdown beside the price; not for sold cars or "price on application". */}
+          {!sold && v.price && v.price > 0 ? (
+            <PriceWithFinance price={v.price}>
+              <p className={priceText}>
+                {formatPrice(v.price)}
+                {reserved}
+              </p>
+            </PriceWithFinance>
+          ) : (
+            <p className={`mt-5 border-b border-ink/15 pb-5 ${priceText}`}>
+              {sold ? "Sold" : formatPrice(v.price)}
+              {reserved}
+            </p>
+          )}
 
           <VehicleSpecs vehicle={v} className="mt-6 xl:gap-y-8 xl:[&_svg]:h-9 xl:[&_svg]:w-9 xl:[&>div>div]:text-[1.05rem] 2xl:[&>div>div]:text-[1.15rem]" />
 
@@ -132,9 +145,6 @@ async function VehicleDetail({ params }: Pick<PageProps<"/cars/[slug]">, "params
               Get directions
             </a>
           </p>
-
-          {/* Repayments on this car's price; not shown for sold cars or "price on application". */}
-          {!sold && v.price && v.price > 0 ? <CarFinance price={v.price} /> : null}
 
           <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-ink/15 pt-5 text-[0.9rem] font-medium leading-tight xl:text-[1.05rem] 2xl:text-lg">
             {site.assurances.map((a) => (
