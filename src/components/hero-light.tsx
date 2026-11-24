@@ -2,9 +2,12 @@ import type { CSSProperties } from "react";
 
 /**
  * Living light over a still page-header photo, drawn in CSS so the photo itself stays pixel-sharp (no video). Kept to
- * what a camera would actually see, so it reads as the photo, not as an effect: the sun's glow breathing, a few broad
- * soft shafts of light through the haze, the odd speck of dust catching the light, a shimmer on the road and an
- * optional taillight glow.
+ * what a camera would actually see, so it reads as the photo, not as an effect: the sun flickering faintly as leaves move
+ * across it, broad soft shafts of light through the haze, the odd speck of dust catching the light, the reflection on
+ * the road shimmering in the heat, and an optional taillight lit steadily.
+ *
+ * Nothing pulses. Each light is a steady base plus faint layers on long, unrelated loop lengths (prime-ish seconds), so
+ * the combined light never visibly repeats and has no rhythm, which is what makes a loop read as artificial.
  *
  * The effects sit in a frame the exact size and offset of the photo as `object-fit: cover` crops it (worked out from
  * the photo's aspect ratio and object-position with container query units), so every effect stays pinned to its
@@ -58,11 +61,24 @@ const RAYS: [number, number, number][] = [
   [238, 9, 0.16],
   [300, 8, 0.12],
 ];
-const RAY_GRADIENT = `conic-gradient(from 0deg, ${RAYS.flatMap(([a, w, s]) => [
-  `rgb(255 196 120 / 0) ${a - w}deg`,
-  `rgb(255 196 120 / ${s}) ${a}deg`,
-  `rgb(255 196 120 / 0) ${a + w}deg`,
-]).join(", ")})`;
+// A second, sparser fan between the first one's shafts. The two drift in opposite directions on different timings, so
+// individual shafts brighten and fade on their own, like sun through moving branches, instead of the fan swinging.
+const RAYS_B: [number, number, number][] = [
+  [54, 5, 0.12],
+  [86, 6, 0.16],
+  [114, 5, 0.18],
+  [141, 7, 0.2],
+  [165, 5, 0.16],
+  [192, 8, 0.2],
+  [222, 6, 0.14],
+];
+const fan = (rays: [number, number, number][]) =>
+  `conic-gradient(from 0deg, ${rays
+    .flatMap(([a, w, s]) => [`rgb(255 196 120 / 0) ${a - w}deg`, `rgb(255 196 120 / ${s}) ${a}deg`, `rgb(255 196 120 / 0) ${a + w}deg`])
+    .join(", ")})`;
+const RAY_MASK = "radial-gradient(closest-side, #000 4%, rgb(0 0 0 / 0.6) 20%, transparent 50%)";
+
+const GLINT = "radial-gradient(closest-side, rgb(255 190 110 / 0.6), rgb(255 150 70 / 0.16) 60%, transparent)";
 
 const at = ([x, y]: Pt): CSSProperties => ({ left: `${x}%`, top: `${y}%` });
 
@@ -93,19 +109,25 @@ export function HeroLight({ ratio, position = [50, 50], sun, glint, taillight }:
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden [container-type:size]">
       <div className="absolute" style={frame}>
-        {/* Shafts of light: a blurred conic fan from the sun, fading with distance, drifting very slowly. */}
+        {/* Shafts of light: two blurred conic fans from the sun, fading with distance, drifting past each other. */}
+        <div className="hl-anim hl-rays-a absolute aspect-square w-[110%] mix-blend-screen blur-[12px]" style={{ ...at(sun), backgroundImage: fan(RAYS), maskImage: RAY_MASK }} />
+        <div className="hl-anim hl-rays-b absolute aspect-square w-[110%] mix-blend-screen blur-[14px]" style={{ ...at(sun), backgroundImage: fan(RAYS_B), maskImage: RAY_MASK }} />
+        {/* The sun: a steady bloom, plus a tighter core that flickers faintly as leaves cross it. */}
         <div
-          className="hl-anim hl-rays absolute aspect-square w-[110%] mix-blend-screen blur-[12px]"
-          style={{ ...at(sun), backgroundImage: RAY_GRADIENT, maskImage: "radial-gradient(closest-side, #000 4%, rgb(0 0 0 / 0.6) 20%, transparent 50%)" }}
-        />
-        {/* The sun's bloom, breathing. */}
-        <div
-          className="hl-anim hl-sun absolute aspect-square w-[30%] rounded-full mix-blend-screen"
+          className="hl-centre absolute aspect-square w-[30%] rounded-full opacity-80 mix-blend-screen"
           style={{
             ...at(sun),
             backgroundImage:
               "radial-gradient(circle closest-side, rgb(255 226 168 / 0.9), rgb(255 192 110 / 0.5) 20%, rgb(255 150 70 / 0.18) 45%, transparent 75%)",
           }}
+        />
+        <div
+          className="hl-anim hl-flicker-a absolute aspect-square w-[14%] rounded-full mix-blend-screen"
+          style={{ ...at(sun), backgroundImage: "radial-gradient(circle closest-side, rgb(255 236 190 / 0.55), rgb(255 200 120 / 0.2) 45%, transparent)" }}
+        />
+        <div
+          className="hl-anim hl-flicker-b absolute aspect-square w-[20%] rounded-full mix-blend-screen"
+          style={{ ...at([sun[0] + 0.6, sun[1] - 0.4]), backgroundImage: "radial-gradient(circle closest-side, rgb(255 220 160 / 0.35), transparent 70%)" }}
         />
         {/* Dust motes drifting up through the light. */}
         {MOTES.map(([x, y, size, duration, delay, drift, opacity], i) => (
@@ -126,20 +148,28 @@ export function HeroLight({ ratio, position = [50, 50], sun, glint, taillight }:
             }
           />
         ))}
-        {/* The sun's reflection shimmering on the road. */}
+        {/* The sun's reflection on the road: a steady pool of light, with a band of heat shimmer rising through it. */}
         {glint && (
-          <div
-            className="hl-anim hl-glint absolute rounded-full mix-blend-screen"
-            style={{
-              ...at(glint.at),
-              width: `${glint.size[0]}%`,
-              height: `${glint.size[1]}%`,
-              backgroundImage: "radial-gradient(closest-side, rgb(255 190 110 / 0.6), rgb(255 150 70 / 0.16) 60%, transparent)",
-            }}
-          />
+          <>
+            <div
+              className="hl-centre absolute rounded-full opacity-75 mix-blend-screen"
+              style={{ ...at(glint.at), width: `${glint.size[0]}%`, height: `${glint.size[1]}%`, backgroundImage: GLINT }}
+            />
+            <div
+              className="hl-anim hl-shimmer absolute rounded-full mix-blend-screen"
+              style={{
+                ...at(glint.at),
+                width: `${glint.size[0] * 1.15}%`,
+                height: `${glint.size[1]}%`,
+                backgroundImage: GLINT,
+                maskImage: "repeating-linear-gradient(to bottom, #000 0 2px, rgb(0 0 0 / 0.15) 4px, #000 7px)",
+                maskSize: "100% 21px",
+              }}
+            />
+          </>
         )}
-        {/* The taillight strip, glowing. */}
-        {strip && <div className="hl-anim hl-tail absolute rounded-full bg-[rgb(255_50_40)] shadow-[0_0_16px_3px_rgb(255_40_30/0.5)] mix-blend-screen blur-[1.5px]" style={strip} />}
+        {/* The taillight strip, lit steadily (a lamp doesn't breathe). */}
+        {strip && <div className="absolute opacity-55 rounded-full bg-[rgb(255_50_40)] shadow-[0_0_16px_3px_rgb(255_40_30/0.5)] mix-blend-screen blur-[1.5px]" style={strip} />}
       </div>
     </div>
   );

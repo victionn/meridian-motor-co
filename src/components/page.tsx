@@ -45,7 +45,7 @@ export function PageHero({
   imagePosition?: string;
   /** Optional looping clip played over the photo (the photo should be the clip's first frame). */
   video?: { src: string; type: string; media?: string }[];
-  /** Optional living light drawn over the photo (sun, rays, motes, glints), with a slow push-in. */
+  /** Optional living light drawn over the still photo (sun, rays, motes, road reflection, taillight). */
   light?: HeroLightProps;
   children?: ReactNode;
 }) {
@@ -65,8 +65,7 @@ export function PageHero({
   return (
     <section className="relative isolate overflow-hidden bg-ink text-paper">
       <div className="relative aspect-4/3 sm:aspect-16/9 md:aspect-auto md:h-[min(72svh,46rem)] md:min-h-[30rem]">
-        {/* Photo, clip, shading and light move together, so the light stays pinned to the photo during the push-in. */}
-        <div className={`absolute inset-0 ${light ? "hl-push" : ""}`}>
+        <div className="absolute inset-0">
           <Image src={image} alt={imageAlt} fill priority sizes="100vw" className="object-cover" style={imagePosition ? { objectPosition: imagePosition } : undefined} />
           {video && <HeroLoop sources={video} position={imagePosition} />}
           {/* Shade the lower left, where the title sits, and the top under the header. */}
