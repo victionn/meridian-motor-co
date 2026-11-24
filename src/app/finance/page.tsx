@@ -78,6 +78,19 @@ export default function FinancePage() {
           <FinanceCalculator />
         </PageSection>
 
+        <section id="enquire" className="mt-16 grid scroll-mt-28 gap-12 border-t border-ink/15 pt-14 sm:mt-24 sm:pt-20 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+          <div>
+            <h2 className="font-classic text-4xl leading-[1.05] tracking-[-0.015em] sm:text-5xl">Ready to start your car loan application?</h2>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink/70">
+              Tell us a little about what you&apos;re after and a finance specialist will call you for an obligation-free consultation. Still looking for a car? Browse the showroom first.
+            </p>
+            <div className="mt-8">
+              <ButtonLink href="/cars" variant="secondary">Browse the showroom</ButtonLink>
+            </div>
+          </div>
+          <LeadForm type="finance" messagePlaceholder="The car you're interested in, the amount you'd like to borrow, or any questions." submitLabel="Enquire now" />
+        </section>
+
         <PageSection title="Frequently asked questions">
           <div className="max-w-4xl divide-y divide-ink/15 border-y border-ink/15">
             {FAQS.map((f) => (
@@ -95,19 +108,6 @@ export default function FinancePage() {
             ))}
           </div>
         </PageSection>
-
-        <section id="enquire" className="mt-16 grid scroll-mt-28 gap-12 border-t border-ink/15 pt-14 sm:mt-24 sm:pt-20 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-          <div>
-            <h2 className="font-classic text-4xl leading-[1.05] tracking-[-0.015em] sm:text-5xl">Ready to start your car loan application?</h2>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink/70">
-              Tell us a little about what you&apos;re after and a finance specialist will call you for an obligation-free consultation. Still looking for a car? Browse the showroom first.
-            </p>
-            <div className="mt-8">
-              <ButtonLink href="/cars" variant="secondary">Browse the showroom</ButtonLink>
-            </div>
-          </div>
-          <LeadForm type="finance" messagePlaceholder="The car you're interested in, the amount you'd like to borrow, or any questions." submitLabel="Enquire now" />
-        </section>
 
         <CertifiedSection />
       </PageBody>
