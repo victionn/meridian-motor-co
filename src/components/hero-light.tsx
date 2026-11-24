@@ -51,26 +51,26 @@ const MOTES: [number, number, number, number, number, number, number][] = [
 // Broad, soft shafts of light falling from the sun through the haze: [angle (0 = up, clockwise), width] in degrees, and
 // strength. Mostly downwards and to the sides, where real sunbeams show through trees.
 const RAYS: [number, number, number][] = [
-  [40, 7, 0.14],
-  [68, 8, 0.18],
-  [100, 7, 0.24],
-  [128, 10, 0.3],
-  [153, 6, 0.2],
-  [177, 12, 0.28],
-  [206, 8, 0.22],
-  [238, 9, 0.16],
-  [300, 8, 0.12],
+  [40, 7, 0.22],
+  [68, 8, 0.3],
+  [100, 7, 0.4],
+  [128, 10, 0.45],
+  [153, 6, 0.34],
+  [177, 12, 0.42],
+  [206, 8, 0.36],
+  [238, 9, 0.26],
+  [300, 8, 0.2],
 ];
 // A second, sparser fan between the first one's shafts. The two drift in opposite directions on different timings, so
 // individual shafts brighten and fade on their own, like sun through moving branches, instead of the fan swinging.
 const RAYS_B: [number, number, number][] = [
-  [54, 5, 0.12],
-  [86, 6, 0.16],
-  [114, 5, 0.18],
-  [141, 7, 0.2],
-  [165, 5, 0.16],
-  [192, 8, 0.2],
-  [222, 6, 0.14],
+  [54, 5, 0.24],
+  [86, 6, 0.3],
+  [114, 5, 0.34],
+  [141, 7, 0.38],
+  [165, 5, 0.3],
+  [192, 8, 0.36],
+  [222, 6, 0.26],
 ];
 const fan = (rays: [number, number, number][]) =>
   `conic-gradient(from 0deg, ${rays
@@ -79,7 +79,7 @@ const fan = (rays: [number, number, number][]) =>
 const RAY_MASK = "radial-gradient(closest-side, #000 4%, rgb(0 0 0 / 0.6) 20%, transparent 50%)";
 
 const GLINT = "radial-gradient(closest-side, rgb(255 190 110 / 0.6), rgb(255 150 70 / 0.16) 60%, transparent)";
-const GLINT_CORE = "radial-gradient(closest-side, rgb(255 205 140 / 0.35), transparent)";
+const GLINT_CORE = "radial-gradient(closest-side, rgb(255 205 140 / 0.6), transparent)";
 
 const at = ([x, y]: Pt): CSSProperties => ({ left: `${x}%`, top: `${y}%` });
 
@@ -115,7 +115,7 @@ export function HeroLight({ ratio, position = [50, 50], sun, glint, taillight }:
         <div className="hl-anim hl-rays-b absolute aspect-square w-[110%] mix-blend-screen blur-[14px]" style={{ ...at(sun), backgroundImage: fan(RAYS_B), maskImage: RAY_MASK }} />
         {/* The sun: a steady bloom, plus a tighter core that flickers faintly as leaves cross it. */}
         <div
-          className="hl-centre absolute aspect-square w-[30%] rounded-full opacity-80 mix-blend-screen"
+          className="hl-centre absolute aspect-square w-[30%] rounded-full opacity-60 mix-blend-screen"
           style={{
             ...at(sun),
             backgroundImage:
@@ -123,12 +123,12 @@ export function HeroLight({ ratio, position = [50, 50], sun, glint, taillight }:
           }}
         />
         <div
-          className="hl-anim hl-flicker-a absolute aspect-square w-[14%] rounded-full mix-blend-screen"
-          style={{ ...at(sun), backgroundImage: "radial-gradient(circle closest-side, rgb(255 236 190 / 0.55), rgb(255 200 120 / 0.2) 45%, transparent)" }}
+          className="hl-anim hl-flicker-a absolute aspect-square w-[18%] rounded-full mix-blend-screen"
+          style={{ ...at(sun), backgroundImage: "radial-gradient(circle closest-side, rgb(255 242 210 / 0.95), rgb(255 210 140 / 0.45) 40%, transparent 78%)" }}
         />
         <div
-          className="hl-anim hl-flicker-b absolute aspect-square w-[20%] rounded-full mix-blend-screen"
-          style={{ ...at([sun[0] + 0.6, sun[1] - 0.4]), backgroundImage: "radial-gradient(circle closest-side, rgb(255 220 160 / 0.35), transparent 70%)" }}
+          className="hl-anim hl-flicker-b absolute aspect-square w-[32%] rounded-full mix-blend-screen"
+          style={{ ...at([sun[0] + 0.6, sun[1] - 0.4]), backgroundImage: "radial-gradient(circle closest-side, rgb(255 218 150 / 0.6), rgb(255 170 90 / 0.18) 50%, transparent 75%)" }}
         />
         {/* Dust motes drifting up through the light. */}
         {MOTES.map(([x, y, size, duration, delay, drift, opacity], i) => (

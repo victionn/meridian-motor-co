@@ -3,10 +3,20 @@
 import { useEffect, useRef } from "react";
 
 /**
- * A short, seamlessly looping clip laid over a page header's still photo, so the photo reads as a living image.
+ * A short clip laid over a page header's still photo, so the photo reads as a living image. By default it loops
+ * seamlessly; with `once` it plays through a single time and holds on its last frame.
  * The still stays underneath: it is what paints first, and what visitors with reduced motion or data saver keep.
  */
-export function HeroLoop({ sources, position }: { sources: { src: string; type: string; media?: string }[]; position?: string }) {
+export function HeroLoop({
+  sources,
+  position,
+  once = false,
+}: {
+  sources: { src: string; type: string; media?: string }[];
+  position?: string;
+  /** Play once and stop on the final frame instead of looping. */
+  once?: boolean;
+}) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -23,7 +33,7 @@ export function HeroLoop({ sources, position }: { sources: { src: string; type: 
       ref={ref}
       aria-hidden
       muted
-      loop
+      loop={!once}
       playsInline
       disablePictureInPicture
       tabIndex={-1}

@@ -142,40 +142,51 @@
 
 /* Living light over page-header photos (HeroLight). The photo never moves, and nothing pulses: every animated layer
    is faint over a steady base, eased, and on a long loop length that shares no rhythm with the others (7.3, 11.9,
-   17, 23, 29 s); only the road reflection shares the sun core's loop, on purpose, since it is that light's reflection, so the light as a whole never visibly repeats. */
+   17, 19, 29 s); only the road reflection shares the sun core's loop, on purpose, since it is that light's reflection, so the light as a whole never visibly repeats. */
 .hl-centre { transform: translate(-50%, -50%); }
 
-/* Sun through moving leaves: small, uneven dips and lifts in brightness, never a swell in size. */
+/* Sun through moving leaves: the core dims and flares unevenly as branches cross it, sometimes quickly, sometimes
+   lingering; never a regular swell, never a change in size. */
 @keyframes hl-flicker-a {
-  0% { opacity: 0.7; }
-  11% { opacity: 0.85; }
-  19% { opacity: 0.62; }
-  34% { opacity: 0.9; }
-  41% { opacity: 0.78; }
-  57% { opacity: 0.95; }
-  66% { opacity: 0.68; }
-  83% { opacity: 0.88; }
-  100% { opacity: 0.7; }
+  0% { opacity: 0.55; }
+  7% { opacity: 0.95; }
+  12% { opacity: 0.8; }
+  18% { opacity: 0.25; }
+  24% { opacity: 0.4; }
+  31% { opacity: 1; }
+  44% { opacity: 0.85; }
+  49% { opacity: 0.3; }
+  53% { opacity: 0.7; }
+  60% { opacity: 0.2; }
+  71% { opacity: 0.9; }
+  78% { opacity: 1; }
+  86% { opacity: 0.45; }
+  93% { opacity: 0.75; }
+  100% { opacity: 0.55; }
 }
 @keyframes hl-flicker-b {
-  0% { opacity: 0.5; }
-  23% { opacity: 0.8; }
-  38% { opacity: 0.55; }
-  61% { opacity: 0.9; }
-  79% { opacity: 0.6; }
-  100% { opacity: 0.5; }
+  0% { opacity: 0.3; }
+  14% { opacity: 0.8; }
+  27% { opacity: 0.55; }
+  35% { opacity: 0.15; }
+  52% { opacity: 0.85; }
+  64% { opacity: 0.6; }
+  73% { opacity: 0.2; }
+  88% { opacity: 0.7; }
+  100% { opacity: 0.3; }
 }
-/* Two fans of shafts drifting a degree or two past each other: individual beams strengthen and fade. */
+/* Two fans of shafts drifting a few degrees past each other: individual beams strengthen and fade. */
 @keyframes hl-rays-a {
-  0% { opacity: 0.7; transform: translate(-50%, -50%) rotate(-1.5deg); }
-  45% { opacity: 0.95; }
-  100% { opacity: 0.75; transform: translate(-50%, -50%) rotate(1.5deg); }
+  0% { opacity: 0.5; transform: translate(-50%, -50%) rotate(-3deg); }
+  40% { opacity: 1; }
+  70% { opacity: 0.65; }
+  100% { opacity: 0.9; transform: translate(-50%, -50%) rotate(3deg); }
 }
 @keyframes hl-rays-b {
-  0% { opacity: 0.25; transform: translate(-50%, -50%) rotate(2deg); }
-  38% { opacity: 0.7; }
-  72% { opacity: 0.35; }
-  100% { opacity: 0.6; transform: translate(-50%, -50%) rotate(-2deg); }
+  0% { opacity: 0.15; transform: translate(-50%, -50%) rotate(3.5deg); }
+  35% { opacity: 0.85; }
+  65% { opacity: 0.3; }
+  100% { opacity: 0.75; transform: translate(-50%, -50%) rotate(-3.5deg); }
 }
 @keyframes hl-mote {
   0% { opacity: 0; transform: translate(0, 0); }
@@ -184,7 +195,7 @@
 }
 .hl-flicker-a { transform: translate(-50%, -50%); animation: hl-flicker-a 7.3s ease-in-out infinite; }
 .hl-flicker-b { transform: translate(-50%, -50%); animation: hl-flicker-b 11.9s ease-in-out infinite; }
-.hl-rays-a { transform: translate(-50%, -50%); animation: hl-rays-a 23s ease-in-out infinite alternate; }
+.hl-rays-a { transform: translate(-50%, -50%); animation: hl-rays-a 19s ease-in-out infinite alternate; }
 .hl-rays-b { transform: translate(-50%, -50%); animation: hl-rays-b 29s ease-in-out infinite alternate; }
 .hl-mote { opacity: 0; animation: hl-mote 17s linear infinite; }
 @media (prefers-reduced-motion: reduce) {

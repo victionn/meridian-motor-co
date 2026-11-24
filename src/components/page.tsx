@@ -33,6 +33,7 @@ export function PageHero({
   imageAlt = "",
   imagePosition,
   video,
+  videoOnce,
   light,
   children,
 }: {
@@ -45,6 +46,8 @@ export function PageHero({
   imagePosition?: string;
   /** Optional looping clip played over the photo (the photo should be the clip's first frame). */
   video?: { src: string; type: string; media?: string }[];
+  /** Play the clip once and hold its last frame, rather than looping. */
+  videoOnce?: boolean;
   /** Optional living light drawn over the still photo (sun, rays, motes, road reflection, taillight). */
   light?: HeroLightProps;
   children?: ReactNode;
@@ -67,7 +70,7 @@ export function PageHero({
       <div className="relative aspect-4/3 sm:aspect-16/9 md:aspect-auto md:h-[min(72svh,46rem)] md:min-h-[30rem]">
         <div className="absolute inset-0">
           <Image src={image} alt={imageAlt} fill priority sizes="100vw" className="object-cover" style={imagePosition ? { objectPosition: imagePosition } : undefined} />
-          {video && <HeroLoop sources={video} position={imagePosition} />}
+          {video && <HeroLoop sources={video} position={imagePosition} once={videoOnce} />}
           {/* Shade the lower left, where the title sits, and the top under the header. */}
           <div className="absolute inset-0 bg-linear-to-t from-ink/85 via-ink/25 to-ink/30" />
           <div className="absolute inset-0 hidden bg-linear-to-r from-ink/60 via-ink/15 to-transparent md:block" />
