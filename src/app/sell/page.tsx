@@ -44,6 +44,7 @@ export default function SellPage() {
           </div>
           <LeadForm
             type="valuation"
+            compact
             fields={["tradeIn", "message"]}
             tradeInLabel="Your car (year, make, model, kilometres)"
             messagePlaceholder="Anything we should know — service history, modifications, finance owing…"

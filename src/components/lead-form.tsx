@@ -19,6 +19,9 @@ type Props = {
   tradeInLabel?: string;
   successTitle?: string;
   successMessage?: string;
+  /** Tighter layout for a form sitting beside a short intro: name, email and phone on one row on desktop,
+   * a two-line message box, and the privacy note beside the button. */
+  compact?: boolean;
 };
 
 const initial: LeadFormState = { status: "idle" };
@@ -38,6 +41,7 @@ export function LeadForm({
   tradeInLabel = "Your car (year, make, model, km)",
   successTitle = "Thank you",
   successMessage = "Thank you for your enquiry. A member of our team will be in contact with you shortly.",
+  compact = false,
 }: Props) {
   const [state, action, pending] = useActionState(submitLead, initial);
   const err = state.status === "error" ? (state.fieldErrors ?? {}) : {};
@@ -54,7 +58,7 @@ export function LeadForm({
   }
 
   return (
-    <form action={action} className="space-y-5" noValidate>
+    <form action={action} className={compact ? "space-y-4" : "space-y-5"} noValidate>
       <input type="hidden" name="type" value={type} />
       {/* Spam trap: hidden from people, so only bots fill it in. */}
       <div className="hidden" aria-hidden>
@@ -75,10 +79,14 @@ export function LeadForm({
         </div>
       )}
 
-      <Text id={`${id}-name`} name="name" label="Name" autoComplete="name" error={err.name} required />
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Text id={`${id}-email`} name="email" label="Email" type="email" autoComplete="email" error={err.email} required />
-        <Text id={`${id}-phone`} name="phone" label="Phone" type="tel" autoComplete="tel" error={err.phone} required />
+      <div className={compact ? "grid gap-4 sm:grid-cols-2 xl:grid-cols-3" : "space-y-5"}>
+        <div className={compact ? "sm:col-span-2 xl:col-span-1" : undefined}>
+          <Text id={`${id}-name`} name="name" label="Name" autoComplete="name" error={err.name} required />
+        </div>
+        <div className={compact ? "contents" : "grid gap-5 sm:grid-cols-2"}>
+          <Text id={`${id}-email`} name="email" label="Email" type="email" autoComplete="email" error={err.email} required />
+          <Text id={`${id}-phone`} name="phone" label="Phone" type="tel" autoComplete="tel" error={err.phone} required />
+        </div>
       </div>
 
       {has("company") && <Text id={`${id}-company`} name="company" label="Company" autoComplete="organization" error={err.company} />}
@@ -88,7 +96,7 @@ export function LeadForm({
       {has("message") && (
         <div>
           <label htmlFor={`${id}-message`} className={label}>{messageLabel}</label>
-          <textarea id={`${id}-message`} name="message" rows={4} placeholder={messagePlaceholder} className={`${field} resize-y`} />
+          <textarea id={`${id}-message`} name="message" rows={compact ? 2 : 4} placeholder={messagePlaceholder} className={`${field} resize-y`} />
         </div>
       )}
 
@@ -96,20 +104,22 @@ export function LeadForm({
         <p role="alert" className="text-base text-red-700">{state.message}</p>
       )}
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="inline-flex w-full items-center justify-center gap-3 rounded-full cta-accent px-7 py-4 text-[0.8rem] font-medium uppercase tracking-[0.16em] disabled:opacity-60 sm:w-auto"
-      >
-        {pending ? "Sending…" : submitLabel} <span aria-hidden>→</span>
-      </button>
-      <p className="text-sm text-ink/55">
-        By submitting you agree to our{" "}
-        <Link href="/privacy" className="underline underline-offset-4">
-          privacy policy
-        </Link>
-        .
-      </p>
+      <div className={compact ? "flex flex-wrap items-center gap-x-6 gap-y-3 pt-1" : "space-y-5"}>
+        <button
+          type="submit"
+          disabled={pending}
+          className="inline-flex w-full items-center justify-center gap-3 rounded-full cta-accent px-7 py-4 text-[0.8rem] font-medium uppercase tracking-[0.16em] disabled:opacity-60 sm:w-auto"
+        >
+          {pending ? "Sending…" : submitLabel} <span aria-hidden>→</span>
+        </button>
+        <p className="text-sm text-ink/55">
+          By submitting you agree to our{" "}
+          <Link href="/privacy" className="underline underline-offset-4">
+            privacy policy
+          </Link>
+          .
+        </p>
+      </div>
     </form>
   );
 }
