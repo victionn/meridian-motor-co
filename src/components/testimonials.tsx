@@ -17,7 +17,7 @@ export function Testimonials() {
 
   return (
     <section className="bg-paper text-ink">
-      <div className="edge-x pb-16 sm:pb-20">
+      <div className="edge-x pt-16 sm:pt-20">
         <h2 className="heading mb-10">Testimonials</h2>
 
         <Carousel label="Customer testimonials">

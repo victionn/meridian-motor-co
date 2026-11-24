@@ -20,11 +20,11 @@ export default function HomePage() {
           <ShowroomPreview />
         </Suspense>
 
+        <Testimonials />
+
         <Suspense fallback={null}>
           <InstagramFeed />
         </Suspense>
-
-        <Testimonials />
       </TextReveal>
     </>
   );
