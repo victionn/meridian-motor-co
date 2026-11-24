@@ -41,7 +41,7 @@ export default function FinancePage() {
         image="/pages/finance.jpg"
         imageAlt="An Audi RS7 and RS6 parked side by side, both with Meridian number plates"
         imagePosition="60% 70%"
-        // Only the headlights change (animation taken from the Higgsfield take): RS6 switches on at ~0.6 s, RS7 at ~2.6 s, then the clip holds on its last frame.
+        // Only the headlights change (animation taken from the Higgsfield take): RS6 switches on at ~0.6 s, RS7 at ~1.2 s, then the clip holds on its last frame.
         video={[
           { src: "/pages/finance-hero-mobile.mp4", type: "video/mp4", media: "(max-width: 767px)" },
           { src: "/pages/finance-hero-desktop.webm", type: "video/webm" },
