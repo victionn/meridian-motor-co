@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { CarFinance } from "@/components/car-finance";
 import { PopularFeatures } from "@/components/popular-features";
 import { ReviewRatings } from "@/components/review-ratings";
 import { ShareButton } from "@/components/share-button";
@@ -131,6 +132,9 @@ async function VehicleDetail({ params }: Pick<PageProps<"/cars/[slug]">, "params
               Get directions
             </a>
           </p>
+
+          {/* Repayments on this car's price; not shown for sold cars or "price on application". */}
+          {!sold && v.price && v.price > 0 ? <CarFinance price={v.price} /> : null}
 
           <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-4 border-t border-ink/15 pt-5 text-[0.9rem] font-medium leading-tight xl:text-[1.05rem] 2xl:text-lg">
             {site.assurances.map((a) => (
